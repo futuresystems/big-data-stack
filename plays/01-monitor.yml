@@ -1,0 +1,4 @@
+---
+
+- include: ganglia.yml
+#- include: nagios.yml
