@@ -1,0 +1,18 @@
+127.0.0.1 localhost
+::1 localhost
+10.0.3.62 zk1 zk1.local
+10.0.3.63 zk2 zk2.local
+10.0.3.64 zk3 zk3.local
+10.0.3.65 master1 master1.local
+10.0.3.66 master2 master2.local
+10.0.3.67 master3 master3.local
+10.0.3.68 slave1 slave1.local
+10.0.3.69 slave2 slave2.local
+10.0.3.70 slave3 slave3.local
+10.0.3.71 frontend1 frontend1.local
+10.0.3.72 frontend2 frontend2.local
+10.0.3.73 frontend3 frontend3.local
+10.0.3.74 loadbalancer1 loadbalancer1.local
+10.0.3.75 monitor1 monitor1.local
+10.0.3.76 gluster1 gluster1.local
+10.0.3.77 gluster2 gluster2.local

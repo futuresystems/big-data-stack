@@ -1,0 +1,12 @@
+Host 10.0.*
+
+  # make sure that PORTALID is set (eg in .bashrc)
+  ProxyCommand ssh -W %h:%p india.futuresystems.org
+
+  # create a semi-persistent socket so that connections can be shared.
+  ControlPath .ssh.%r@%h:%p
+  ControlMaster auto
+  ControlPersist 15m
+
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null

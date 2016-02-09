@@ -1,0 +1,22 @@
+---
+
+#param: packages to install :: [str]
+package_list: []
+
+#param: services that should be running :: [str]
+services_running: []
+
+#param: users to create :: [dict]
+# accepts the 'groups', 'createhome', and 'state' parameters of the
+# `user` ansible module
+users_managed: {}
+
+groups_managed: {}
+
+#param: authorized_keys to inject :: [dict]
+# required: `user`, `key` attributed
+authorized_keys: ''
+
+private_keys: []
+
+directories: {}

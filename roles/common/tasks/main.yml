@@ -1,0 +1,138 @@
+---
+
+- name: update cache
+  apt:
+    update_cache: yes
+  tags: common
+
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ package_list }}"
+  tags:
+    - common_install
+    - common
+    - install
+
+- name: set hosts
+  copy:
+    src: hosts
+    dest: /etc/hosts
+  tags:
+    - common_configure_network
+    - common
+    - configure
+    - network
+
+- name: ensure services running
+  service:
+    name: "{{ item }}"
+    state: running
+  with_items: services_running
+  tags:
+    - common_service
+    - common
+    - service
+
+- name: create users
+  user:
+    name: "{{ item.key }}"
+    state: "{{ item.value.state | default(omit) }}"
+    append: "{{ item.value.append | default(omit) }}"
+    comment: "{{ item.value.comment | default(omit) }}"
+    createhome: "{{ item.value.createhome | default(omit) }}"
+    expires: "{{ item.value.expires | default(omit) }}"
+    force: "{{ item.value.force | default(omit) }}"
+    generate_ssh_key: "{{ item.value.generate_ssh_key | default(omit) }}"
+    group: "{{ item.value.group | default(omit) }}"
+    groups: "{{ item.value.groups | default(omit) }}"
+    home: "{{ item.value.home | default(omit) }}"
+    login_class: "{{ item.value.login_class | default(omit) }}"
+    move_home: "{{ item.value.move_home | default(omit) }}"
+    non_unique: "{{ item.value.non_unique | default(omit) }}"
+    password: "{{ item.value.password | default(omit) }}"
+    remove: "{{ item.value.remove | default(omit) }}"
+    shell: "{{ item.value.shell | default(omit) }}"
+    skeleton: "{{ item.value.skeleton | default(omit) }}"
+    ssh_key_bits: "{{ item.value.ssh_key_bits | default(omit) }}"
+    ssh_key_comment: "{{ item.value.ssh_key_comment | default(omit) }}"
+    ssh_key_file: "{{ item.value.ssh_key_file | default(omit) }}"
+    ssh_key_passphrase: "{{ item.value.ssh_key_passphrase | default(omit) }}"
+    ssh_key_type: "{{ item.value.ssh_key_type | default(omit) }}"
+    system: "{{ item.value.system | default(omit) }}"
+    uid: "{{ item.value.uid | default(omit) }}"
+    update_password: "{{ item.value.update_password | default(omit) }}"
+  with_dict: users_managed
+  tags:
+    - common_configure_user
+    - common
+    - user
+
+- name: create groups
+  group:
+    name: "{{ item.key }}"
+    gid: "{{ item.value.gid | default(omit) }}"
+    state: "{{ item.value.state | default('present') }}"
+    system: "{{ item.value.system | default('no') }}"
+  with_dict: groups_managed
+  tags:
+    - common_configure_group
+    - common
+    - configure
+    - group
+
+- name: add authorized key
+  when: authorized_keys | length > 0
+  authorized_key:
+    key: "{{ item.key }}"
+    user: "{{ item.user }}"
+    exclusive: "{{ item.exclusive | default(False) }}"
+  with_items: authorized_keys
+  tags:
+    - common_configure_user
+    - common
+    - user
+
+- name: ensure ssh directory
+  no_log: yes
+  file:
+    path: "/home/{{ item.user }}/.ssh"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0700
+  with_items: private_keys
+  tags:
+    - common_configure_user
+    - common
+    - configure
+    - user
+
+- name: add private keys
+  no_log: yes
+  copy:
+    dest:
+      "/home/{{ item.user }}/.ssh/{{ item.name | default('id_rsa') }}"
+    content: "{{ item.key }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0600
+  with_items: private_keys
+  tags:
+    - common_configure_user
+    - common
+    - configure
+    - user
+
+- name: create additional directories
+  file:
+    path: "{{ item.key }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode | default('0700') }}"
+    state: directory
+  with_dict: directories
+  tags:
+    - common_configure
+    - configure
