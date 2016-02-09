@@ -1,0 +1,36 @@
+---
+
+- name: common
+  hosts: all
+  sudo: yes
+  roles:
+
+    - role: common
+
+      package_list:
+        - emacs24-nox
+        - curl
+        - httpie
+        - ssh
+        - rsync
+        - parted
+        - iotop
+        - facter
+
+      services_running:
+        - ssh
+
+      groups_managed:
+        hadoopadmin:
+        hadoopuser:
+
+
+- name: frontend packages
+  hosts: frontends
+  sudo: yes
+  roles:
+    - role: common
+      package_list:
+        - git
+        - unzip
+        - maven
