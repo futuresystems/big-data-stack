@@ -121,6 +121,8 @@
 
       hadoop_cfg_path: /opt/hadoop/etc/hadoop
 
+      hadoop_iface: ansible_eth0
+
       clear_configs:
         - core-site.xml
         - hdfs-site.xml
