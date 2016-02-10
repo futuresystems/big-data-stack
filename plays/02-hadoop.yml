@@ -14,13 +14,13 @@
 
       authorized_keys:
         - user: hadoop
-          key: "{{ hadoop_key_public }}"
+          key: "{{ lookup('file', '../keys/hadoop/id_rsa.pub') }}"
         - user: hadoop
           key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
       private_keys:
         - user: hadoop
-          key: "{{ hadoop_key_private }}"
+          key: "{{ lookup('file', '../keys/hadoop/id_rsa') }}"
 
       directories:
         /hdfs:
