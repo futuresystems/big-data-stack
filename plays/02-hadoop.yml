@@ -145,13 +145,11 @@
 
         yarn.resourcemanager.ha.enabled: "true"
         yarn.resourcemanager.cluster-id: "cluster1"
-        yarn.resourcemanager.ha.rm-ids: "rm1,rm2,rm3"
+        yarn.resourcemanager.ha.rm-ids: "rm1,rm2"
         yarn.resourcemanager.hostname.rm1:
           "{{ hostvars[groups['resourcemanagernodes'][0]].ansible_hostname }}"
         yarn.resourcemanager.hostname.rm2:
           "{{ hostvars[groups['resourcemanagernodes'][1]].ansible_hostname }}"
-        yarn.resourcemanager.hostname.rm3:
-          "{{ hostvars[groups['resourcemanagernodes'][2]].ansible_hostname }}"
         yarn.resourcemanager.zk-address:
           "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
 
