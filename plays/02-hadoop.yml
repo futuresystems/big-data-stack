@@ -161,7 +161,7 @@
 
       hdfs_site:
         dfs.namenode.name.dir: file:///hdfs/namenode
-        dfs.replication: "{{ dfs_replication }}"
+        dfs.replication: 1
         dfs.permissions.enabled: "true"
         dfs.permissions.superusergroup: hadoop,hadoopadmin
         dfs.namenode.datanode.registration.ip-hostname-check: "false"
