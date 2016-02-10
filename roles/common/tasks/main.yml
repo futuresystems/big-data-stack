@@ -16,8 +16,8 @@
     - install
 
 - name: set hosts
-  copy:
-    src: hosts
+  template:
+    src: hosts.j2
     dest: /etc/hosts
   tags:
     - common_configure_network

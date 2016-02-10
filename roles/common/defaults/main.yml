@@ -1,5 +1,11 @@
 ---
 
+#param: the domain name
+domain_name: "local"
+
+#param: internal interface device name
+iface_internal: eth0
+
 #param: packages to install :: [str]
 package_list: []
 
