@@ -1,5 +1,8 @@
 ---
 
+#param: set the hostname to the name defined in the inventory file
+use_ansible_inventory_hostname: false
+
 #param: the domain name
 domain_name: "local"
 

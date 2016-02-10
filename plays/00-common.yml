@@ -7,6 +7,7 @@
 
     - role: common
 
+      use_ansible_inventory_hostname: true
       generate_hosts_file: true
 
       package_list:
