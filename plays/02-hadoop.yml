@@ -198,7 +198,7 @@
 
         # using `hostvars[groups['zookeepernodes']] does not work
         # as the `zkN` nodes are not visible using that approach
-        ha.zookeeper.quorum: "{{ zookeeper_hosts }}"
+        ha.zookeeper.quorum: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
 
         # journalnodes
         dfs.journalnode.edits.dir:
