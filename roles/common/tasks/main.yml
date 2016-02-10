@@ -1,5 +1,14 @@
 ---
 
+- name: update the hostname
+  when: use_ansible_inventory_hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  tags:
+    - common_install
+    - common
+    - install
+
 - name: update cache
   apt:
     update_cache: yes
@@ -16,6 +25,7 @@
     - install
 
 - name: set hosts
+  when: generate_hosts_file
   template:
     src: hosts.j2
     dest: /etc/hosts
