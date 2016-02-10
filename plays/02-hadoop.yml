@@ -1,0 +1,348 @@
+---
+
+- name: common:!frontend
+  hosts: hadoopnodes
+  sudo: yes
+  roles:
+
+    - role: common
+
+      users_managed:
+        hadoop:
+          groups: hadoopadmin
+          append: yes
+
+      authorized_keys:
+        - user: hadoop
+          key: "{{ hadoop_key_public }}"
+        - user: hadoop
+          key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+      private_keys:
+        - user: hadoop
+          key: "{{ hadoop_key_private }}"
+
+      directories:
+        /hdfs:
+          owner: hadoop
+          group: hadoop
+
+    - role: limits
+
+      limits_conf_d_files:
+        hadoop.conf:
+          - domain: hadoop
+            type: soft
+            item: nofile
+            value: 65535
+          - domain: hadoop
+            type: hard
+            item: nofile
+            value: 65535
+
+
+- name: storage
+  hosts: datanodes
+  sudo: yes
+  tasks:
+
+    # - name: storage | create partition label
+    #   command: parted -s /dev/vdb mklabel gpt creates=/dev/vdb1
+    #   tags: storage
+
+    # - name: storage | create partition
+    #   command: parted -s /dev/vdb mkpart primary ext3 0% 100% creates=/dev/vdb1
+    #   tags: storage
+
+    # - name: storage | format disks
+    #   filesystem:
+    #     dev: /dev/vdb1
+    #     fstype: ext3
+    #   tags: storage
+
+    # - name: storage | mount
+    #   mount:
+    #     name: /hdfs
+    #     src: /dev/vdb1
+    #     fstype: ext3
+    #     state: "{{ item }}"
+    #   with_items: [present, mounted]
+    #   tags: storage
+
+    - name: storage | fix permissions
+      file:
+        path: /hdfs
+        owner: hadoop
+        group: hadoopadmin
+        recurse: yes
+      tags: storage
+
+
+- name: zookeeper
+  hosts: zookeepernodes
+  sudo: yes
+  roles:
+    - role: zookeeper
+      zookeeper_node_iface: ansible_eth0
+      zookeeper_nodes: "{{ groups['zookeeper'] }}"
+
+    - role: supervisord
+      supervisord_programs:
+        zookeeper:
+          user: zookeeper
+          command: /usr/share/zookeeper/bin/zkServer.sh start-foreground
+          stdout_logfile: /var/log/zookeeper/stdout.log
+          stderr_logfile: /var/log/zookeeper/stderr.log
+
+
+- name: hadoop common
+  hosts: hadoopnodes
+  sudo: yes
+  post_tasks:
+
+    # somehow the permissions get messed up (a subset of the
+    # directories become only executable by owner, preventing any
+    # other users from calling the hadoop binaries
+
+    - name: fix permissions
+      shell: find /opt/hadoop-* -type d -exec chmod a+r,a+x {} +
+      tags:
+        - hadoop_common
+        - hadoop
+        - fix_permissions
+        - fix
+
+  roles:
+    - role: java
+    - role: supervisord
+    - role: hadoop_install
+      hadoop_version: 2.7.1
+    - role: hadoop_configure
+
+      hadoop_cfg_path: /opt/hadoop/etc/hadoop
+
+      clear_configs:
+        - core-site.xml
+        - hdfs-site.xml
+        - yarn-site.xml
+        - mapred-site.xml
+
+
+      core_site:
+        fs.defaultFS:
+          hdfs://futuresystems
+
+      mapred_site:
+        mapreduce.framework.name: yarn
+        mapreduce.jobhistory.address:
+          "{{ groups['historyserver'][0] }}:10020"
+
+      yarn_site:
+        yarn.acl.enable: "true"
+        yarn.log-aggregation-enable: "true"
+
+        yarn.resourcemanager.ha.enabled: "true"
+        yarn.resourcemanager.cluster-id: "cluster1"
+        yarn.resourcemanager.ha.rm-ids: "rm1,rm2,rm3"
+        yarn.resourcemanager.hostname.rm1:
+          "{{ hostvars[groups['resourcemanagers'][0]].ansible_hostname }}"
+        yarn.resourcemanager.hostname.rm2:
+          "{{ hostvars[groups['resourcemanagers'][1]].ansible_hostname }}"
+        yarn.resourcemanager.hostname.rm3:
+          "{{ hostvars[groups['resourcemanagers'][2]].ansible_hostname }}"
+        yarn.resourcemanager.zk-address:
+          "{{ groups['zookeeper'] | join(':2181,') ~ ':2181' }}"
+
+        yarn.nodemanager.aux-services: mapreduce_shuffle
+        yarn.nodemanager.aux-services.mapreduce_shuffle.class:
+          org.apache.hadoop.mapred.ShuffleHandler
+
+      hdfs_site:
+        dfs.namenode.name.dir: file:///hdfs/namenode
+        dfs.replication: "{{ dfs_replication }}"
+        dfs.permissions.enabled: "true"
+        dfs.permissions.superusergroup: hadoop,hadoopadmin
+        dfs.namenode.datanode.registration.ip-hostname-check: "false"
+
+        # HA
+        dfs.nameservices: futuresystems
+
+        dfs.ha.namenodes.futuresystems: nn1,nn2
+        dfs.namenode.rpc-address.futuresystems.nn1:
+          "{{ hostvars[groups['namenodes'][0]][hadoop_iface].ipv4.address }}:8020"
+        dfs.namenode.rpc-address.futuresystems.nn2:
+          "{{ hostvars[groups['namenodes'][1]][hadoop_iface].ipv4.address }}:8020"
+
+        dfs.namenode.http-address.futuresystems.nn1:
+          "{{ hostvars[groups['namenodes'][0]][hadoop_iface].ipv4.address }}:50070"
+        dfs.namenode.http-address.futuresystems.nn2:
+          "{{ hostvars[groups['namenodes'][1]][hadoop_iface].ipv4.address }}:50070"
+
+        dfs.namenode.shared.edits.dir:
+          "\
+          qjournal://\
+          {{ hostvars[groups['journalnodes'][0]][hadoop_iface].ipv4.address }}:8485;\
+          {{ hostvars[groups['journalnodes'][1]][hadoop_iface].ipv4.address }}:8485;\
+          {{ hostvars[groups['journalnodes'][2]][hadoop_iface].ipv4.address }}:8485\
+          /futuresystems\
+          "
+
+        dfs.client.failover.proxy.provider.futuresystems:
+          "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
+
+        dfs.ha.fencing.methods: sshfence
+        dfs.ha.fencing.ssh.private-key-files:
+          "{{ ansible_env.HOME }}/.ssh/id_rsa"
+
+        dfs.ha.automatic-failover.enabled: "true"
+
+        # using `hostvars[groups['zookeeper']] does not work
+        # as the `zkN` nodes are not visible using that approach
+        ha.zookeeper.quorum: "{{ zookeeper_hosts }}"
+
+        # journalnodes
+        dfs.journalnode.edits.dir:
+          /hdfs/journalnode
+
+        # datanodes
+        dfs.datanode.data.dir: file:///hdfs/datanode
+
+
+      # mapred_site:
+      #   mapred.job.tracker: master1.local:9001
+      #   mapreduce.jobtracker.restart.recover: 'true'
+
+
+- name: stop everything
+  hosts: hadoopnodes
+  sudo: yes
+  tasks:
+
+    - name: stop supervisord
+      shell: supervisorctl stop all || echo -n
+      tags: stop
+
+    - name: stop everything
+      shell: killall -q -u hadoop java || echo -n
+      tags: stop
+
+## journal nodes need to be up for first_run to execute
+
+- name: journal nodes
+  hosts: journalnodes
+  sudo: yes
+  roles:
+
+    - role: supervisord
+      supervisord_programs:
+        journalnode:
+          command: sh -lc 'hdfs journalnode'
+          user: hadoop
+          stdout_logfile: /hdfs/journalnode-stdout.log
+          stderr_logfile: /hdfs/journalnode-stderr.log
+
+
+
+- name: initialize namenodes 1
+  hosts: namenodes[0]
+  user: hadoop
+  tasks:
+
+    - name: namenode format
+      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -format -force
+      tags: first_run
+
+    - name: initialize shared edits
+      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -initializeSharedEdits -force
+      tags: first_run
+
+    - name: format zookeeper
+      shell: . /etc/profile.d/hadoop.sh; hdfs zkfc -formatZK -force
+      tags: first_run
+
+    - name: run for nn2
+      shell: . /etc/profile.d/hadoop.sh; hdfs namenode
+      async: 100
+      poll: 0
+      tags: first_run
+
+
+- name: initialize namenodes 2
+  hosts: namenodes[1]
+  user: hadoop
+  tasks:
+    - name: bootstrap standby node
+      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -bootstrapStandby -force
+      tags: first_run
+
+
+- name: cleanup
+  hosts: namenodes
+  user: hadoop
+  tasks:
+    - name: stop NameNode tasks
+      shell: for pid in $(jps | grep NameNode | cut -d' ' -f1); do kill $pid; done
+      tags: first_run
+
+
+- name: namenodes
+  hosts: namenodes
+  sudo: yes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+
+        namenode:
+          command: sh -lc 'hdfs namenode'
+          user: hadoop
+          stdout_logfile: /hdfs/namenode-stdout.log
+          stderr_logfile: /hdfs/namenode-stderr.log
+
+        zkfc:
+          command: sh -lc 'hdfs zkfc'
+          user: hadoop
+          stdout_logfile: /hdfs/zkfc-stdout.log
+          stderr_logfile: /hdfs/zkfc-stderr.log
+
+
+- name: resourcemanagers
+  hosts: resourcemanagers
+  sudo: yes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+        resourcemanager:
+          command: sh -lc 'yarn resourcemanager'
+          user: hadoop
+          stdout_logfile: /hdfs/resourcemanager-stdout.log
+          stderr_logfile: /hdfs/resourcemanager-stderr.log
+
+- name: data nodes
+  hosts: datanodes
+  sudo: yes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+        datanode:
+          command: sh -lc 'hdfs datanode'
+          user: hadoop
+          stdout_logfile: /hdfs/datanode-stdout.log
+          stderr_logfile: /hdfs/datanode-stderr.log
+        nodemanager:
+          command: sh -lc 'yarn nodemanager'
+          user: hadoop
+          stdout_logfile: /hdfs/nodemanager-stdout.log
+          stderr_logfile: /hdfs/nodemanager-stderr.log
+
+
+- name: history server
+  hosts: historyservernodes
+  sudo: yes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+        historyserver:
+          command: sh -lc 'mapred historyserver'
+          user: hadoop
+          stdout_logfile: /hdfs/historyserver-stdout.log
+          stderr_logfile: /hdfs/historyserver-stderr.log
