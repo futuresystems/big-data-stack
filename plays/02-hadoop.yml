@@ -84,7 +84,7 @@
   roles:
     - role: zookeeper
       zookeeper_node_iface: ansible_eth0
-      zookeeper_nodes: "{{ groups['zookeeper'] }}"
+      zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
 
     - role: supervisord
       supervisord_programs:
@@ -135,7 +135,7 @@
       mapred_site:
         mapreduce.framework.name: yarn
         mapreduce.jobhistory.address:
-          "{{ groups['historyserver'][0] }}:10020"
+          "{{ groups['historyservernodes'][0] }}:10020"
 
       yarn_site:
         yarn.acl.enable: "true"
@@ -145,13 +145,13 @@
         yarn.resourcemanager.cluster-id: "cluster1"
         yarn.resourcemanager.ha.rm-ids: "rm1,rm2,rm3"
         yarn.resourcemanager.hostname.rm1:
-          "{{ hostvars[groups['resourcemanagers'][0]].ansible_hostname }}"
+          "{{ hostvars[groups['resourcemanagernodes'][0]].ansible_hostname }}"
         yarn.resourcemanager.hostname.rm2:
-          "{{ hostvars[groups['resourcemanagers'][1]].ansible_hostname }}"
+          "{{ hostvars[groups['resourcemanagernodes'][1]].ansible_hostname }}"
         yarn.resourcemanager.hostname.rm3:
-          "{{ hostvars[groups['resourcemanagers'][2]].ansible_hostname }}"
+          "{{ hostvars[groups['resourcemanagernodes'][2]].ansible_hostname }}"
         yarn.resourcemanager.zk-address:
-          "{{ groups['zookeeper'] | join(':2181,') ~ ':2181' }}"
+          "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
 
         yarn.nodemanager.aux-services: mapreduce_shuffle
         yarn.nodemanager.aux-services.mapreduce_shuffle.class:
@@ -196,7 +196,7 @@
 
         dfs.ha.automatic-failover.enabled: "true"
 
-        # using `hostvars[groups['zookeeper']] does not work
+        # using `hostvars[groups['zookeepernodes']] does not work
         # as the `zkN` nodes are not visible using that approach
         ha.zookeeper.quorum: "{{ zookeeper_hosts }}"
 
