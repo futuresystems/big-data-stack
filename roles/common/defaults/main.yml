@@ -6,6 +6,9 @@ domain_name: "local"
 #param: internal interface device name
 iface_internal: eth0
 
+#param: generate hosts file from inventory
+generate_hosts_file: false
+
 #param: packages to install :: [str]
 package_list: []
 

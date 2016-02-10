@@ -7,6 +7,8 @@
 
     - role: common
 
+      generate_hosts_file: true
+
       package_list:
         - emacs24-nox
         - curl

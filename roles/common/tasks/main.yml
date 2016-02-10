@@ -16,6 +16,7 @@
     - install
 
 - name: set hosts
+  when: generate_hosts_file
   template:
     src: hosts.j2
     dest: /etc/hosts
