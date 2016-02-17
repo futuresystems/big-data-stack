@@ -1,5 +1,24 @@
 ---
 
+- name: prepare dynamic properties
+  hosts: localhost
+  sudo: no
+  vars:
+    ssh_users:
+      - hadoop
+  tasks:
+
+    - name: remove keys directory contents
+      local_action: file path=keys state=absent
+
+    - name: create keys directory
+      local_action: file path=keys state=directory
+
+    - name: generate ssh key for user
+      local_action: command ssh-keygen -t rsa -b 4096 -N "" -f "keys/{{ item }}"
+      with_items:
+        - hadoop
+
 - name: common:!frontend
   hosts: hadoopnodes
   sudo: yes
@@ -14,13 +33,13 @@
 
       authorized_keys:
         - user: hadoop
-          key: "{{ lookup('file', '../keys/hadoop/id_rsa.pub') }}"
+          key: "{{ lookup('file', '../keys/hadoop.pub') }}"
         - user: hadoop
           key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
       private_keys:
         - user: hadoop
-          key: "{{ lookup('file', '../keys/hadoop/id_rsa') }}"
+          key: "{{ lookup('file', '../keys/hadoop') }}"
 
       directories:
         /hdfs:
