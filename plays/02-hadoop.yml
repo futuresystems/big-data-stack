@@ -2,7 +2,7 @@
 
 - name: prepare dynamic properties
   hosts: localhost
-  sudo: no
+  become: no
   vars:
     ssh_users:
       - hadoop
@@ -21,7 +21,7 @@
 
 - name: common:!frontend
   hosts: hadoopnodes
-  sudo: yes
+  become: yes
   roles:
 
     - role: common
@@ -62,7 +62,7 @@
 
 - name: storage
   hosts: datanodes
-  sudo: yes
+  become: yes
   tasks:
 
     # - name: storage | create partition label
@@ -99,7 +99,7 @@
 
 - name: zookeeper
   hosts: zookeepernodes
-  sudo: yes
+  become: yes
   roles:
     - role: zookeeper
       zookeeper_node_iface: ansible_eth0
@@ -116,7 +116,7 @@
 
 - name: hadoop common
   hosts: hadoopnodes
-  sudo: yes
+  become: yes
   post_tasks:
 
     # somehow the permissions get messed up (a subset of the
@@ -234,7 +234,7 @@
 
 - name: stop everything
   hosts: hadoopnodes
-  sudo: yes
+  become: yes
   tasks:
 
     - name: stop supervisord
@@ -249,7 +249,7 @@
 
 - name: journal nodes
   hosts: journalnodes
-  sudo: yes
+  become: yes
   roles:
 
     - role: supervisord
@@ -306,7 +306,7 @@
 
 - name: namenodes
   hosts: namenodes
-  sudo: yes
+  become: yes
   roles:
     - role: supervisord
       supervisord_programs:
@@ -326,7 +326,7 @@
 
 - name: resourcemanagers
   hosts: resourcemanagers
-  sudo: yes
+  become: yes
   roles:
     - role: supervisord
       supervisord_programs:
@@ -338,7 +338,7 @@
 
 - name: data nodes
   hosts: datanodes
-  sudo: yes
+  become: yes
   roles:
     - role: supervisord
       supervisord_programs:
@@ -356,7 +356,7 @@
 
 - name: history server
   hosts: historyservernodes
-  sudo: yes
+  become: yes
   roles:
     - role: supervisord
       supervisord_programs:

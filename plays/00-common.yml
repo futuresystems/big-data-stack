@@ -2,7 +2,7 @@
 
 - name: common
   hosts: all
-  sudo: yes
+  become: yes
   roles:
 
     - role: common
@@ -30,7 +30,7 @@
 
 - name: frontend packages
   hosts: frontends
-  sudo: yes
+  become: yes
   roles:
     - role: common
       package_list:

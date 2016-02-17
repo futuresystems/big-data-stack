@@ -2,14 +2,14 @@
 
 - name: ganglia monitor
   hosts: monitornodes[0]
-  sudo: yes
+  become: yes
   roles:
     - role: ganglia_metad
     - role: ganglia_web
 
 - name: ganglia nodes
   hosts: all
-  sudo: yes
+  become: yes
   roles:
     - role: ganglia_mond
       ganglia_udp_send_channels:
