@@ -1,0 +1,8 @@
+---
+
+- name: install pig
+  hosts: frontendnodes
+  become: yes
+  roles:
+    - role: java
+    - role: pig

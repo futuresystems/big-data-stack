@@ -1,0 +1,4 @@
+---
+
+- include: addons/pig.yml
+- include: addons/spark.yml
