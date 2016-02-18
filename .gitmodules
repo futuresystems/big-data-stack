@@ -40,3 +40,6 @@
 [submodule "roles/java"]
 	path = roles/java
 	url = git@github.com:futuresystems/ansible-role-java
+[submodule "roles/pig"]
+	path = roles/pig
+	url = git@github.com:futuresystems/ansible-role-pig.git
