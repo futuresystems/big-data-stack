@@ -268,19 +268,19 @@
   tasks:
 
     - name: namenode format
-      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -format -force
+      shell: sh -lc 'hdfs namenode -format -force'
       tags: first_run
 
     - name: initialize shared edits
-      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -initializeSharedEdits -force
+      shell: sh -lc 'hdfs namenode -initializeSharedEdits -force'
       tags: first_run
 
     - name: format zookeeper
-      shell: . /etc/profile.d/hadoop.sh; hdfs zkfc -formatZK -force
+      shell: sh -lc 'hdfs zkfc -formatZK -force'
       tags: first_run
 
     - name: run for nn2
-      shell: . /etc/profile.d/hadoop.sh; hdfs namenode
+      shell: sh -lc 'hdfs namenode'
       async: 100
       poll: 0
       tags: first_run
@@ -291,7 +291,7 @@
   user: hadoop
   tasks:
     - name: bootstrap standby node
-      shell: . /etc/profile.d/hadoop.sh; hdfs namenode -bootstrapStandby -force
+      shell: sh -lc 'hdfs namenode -bootstrapStandby -force'
       tags: first_run
 
 
