@@ -9,6 +9,40 @@ directory. A playbook for deploying all the addons is given in
 `play-alladdons.yml`.
 
 
+# Stack
+
+1. Analytics Layer
+   1. [ ] BLAS
+   1. [ ] LAPACK
+   1. [ ] Mahout
+   1. [ ] MLlib
+   1. [ ] MLbase
+   1. [ ] R+libraries
+   1. [ ] Python
+      1. [ ] Pandas
+      1. [ ] Scikit-learn
+1. Data Processing Layer
+   1. [X] Hadoop MapReduce
+   1. [X] Spark
+   1. [ ] Tez
+   1. [ ] Hama
+   1. [ ] Storm
+   1. [ ] Hive
+   1. [ ] Pig
+   1. [ ] Flink
+1. Database Layer
+    1. [ ] MongoDB
+    1. [ ] CouchDB
+    1. [ ] HBase
+    1. [ ] MySQL
+    1. [ ] PostgreSQL
+    1. [ ] Memcached
+    1. [ ] Redis
+1. [X] Scheduling: YARN
+1. [X] Storage: HDFS
+1. [X] Monitoring: Ganglia
+
+
 # Usage
 
 1. Install the requirements using `pip install -r requirements.txt`
