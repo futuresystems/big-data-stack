@@ -1,4 +1,4 @@
-# ansible-hadoop-stack
+# Big Data Analytics Stack
 
 Provides a set of Ansible playbooks to deploy a Big Data analytics
 stack on top of Hadoop/Yarn.
