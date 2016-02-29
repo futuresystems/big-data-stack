@@ -45,6 +45,7 @@ directory. A playbook for deploying all the addons is given in
 
 # Usage
 
+1. Download this repository using `git clone --recursive`.
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
 1. Launch the cluster using `vcl boot -p openstack -P $USER-` This
