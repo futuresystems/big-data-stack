@@ -17,8 +17,9 @@ directory. A playbook for deploying all the addons is given in
    1. [ ] Mahout
    1. [ ] MLlib
    1. [ ] MLbase
+   1. [X] Java
    1. [ ] R+libraries
-   1. [ ] Python
+   1. [ ] **_Python_**
       1. [ ] Pandas
       1. [ ] Scikit-learn
 1. Data Processing Layer
@@ -28,13 +29,13 @@ directory. A playbook for deploying all the addons is given in
    1. [ ] Hama
    1. [ ] Storm
    1. [ ] Hive
-   1. [ ] Pig
+   1. [X] Pig
    1. [ ] Flink
 1. Database Layer
-    1. [ ] MongoDB
+    1. [ ] **_MongoDB_**
     1. [ ] CouchDB
-    1. [ ] HBase
-    1. [ ] MySQL
+    1. [ ] **_HBase_**
+    1. [ ] **_MySQL_**
     1. [ ] PostgreSQL
     1. [ ] Memcached
     1. [ ] Redis
