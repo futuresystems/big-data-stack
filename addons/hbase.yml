@@ -1,0 +1,8 @@
+---
+
+- name: Deploy HBase
+  become: yes
+  roles:
+    - role: java
+    - role: hbase_install
+    - role: hbase_configure
