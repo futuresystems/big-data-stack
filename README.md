@@ -15,7 +15,7 @@ directory. A playbook for deploying all the addons is given in
    * [ ] BLAS
    * [ ] LAPACK
    * [ ] Mahout
-   * [ ] MLlib
+   * [ ] **_MLlib_**
    * [ ] MLbase
    * [X] Java
    * [ ] R+libraries
@@ -27,10 +27,10 @@ directory. A playbook for deploying all the addons is given in
    * [X] Spark
    * [ ] Tez
    * [ ] Hama
-   * [ ] Storm
+   * [ ] **_Storm_**
    * [ ] Hive
    * [X] Pig
-   * [ ] Flink
+   * [ ] **_Flink_**
 - Database Layer
     * [ ] **_MongoDB_**
     * [ ] CouchDB
