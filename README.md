@@ -78,3 +78,15 @@ Please see the `LICENSE` file in the root directory of the repository.
 1. Fork the repository
 1. Add yourself to the `CONTRIBUTORS.yml` file
 1. Submit a pull request to the `unstable` branch
+
+
+# Stack Components
+
+<!-- This is a list of the components with the associated information: -->
+<!-- - description of purpose -->
+<!-- - summary of general usage -->
+<!-- - references (with links) to any scientific publications by the authors -->
+<!-- - official documentation -->
+<!-- - links to third party tutorials and demonstrations -->
+
+<!-- The name of the technology should link to the project webpage -->
