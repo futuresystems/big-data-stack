@@ -41,6 +41,7 @@ directory. A playbook for deploying all the addons is given in
     * [ ] Redis
 - Scheduling:
   * [X] YARN
+  * [ ] Mesos
 - Storage
   * [X] HDFS
 - Monitoring
