@@ -43,3 +43,6 @@
 [submodule "roles/pig"]
 	path = roles/pig
 	url = git@github.com:futuresystems/ansible-role-pig.git
+[submodule "roles/hbase_install"]
+	path = roles/hbase_install
+	url = git@github.com:futuresystems/ansible-role-hbase_install.git
