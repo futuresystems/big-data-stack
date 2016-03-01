@@ -46,3 +46,6 @@
 [submodule "roles/hbase_install"]
 	path = roles/hbase_install
 	url = git@github.com:futuresystems/ansible-role-hbase_install.git
+[submodule "roles/hbase_configure"]
+	path = roles/hbase_configure
+	url = git@github.com:futuresystems/ansible-role-hbase_configure.git
