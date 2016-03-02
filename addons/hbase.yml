@@ -8,6 +8,7 @@
     - role: hbase_install
       hbase_version: 1.2.0   # hbase 1.2.X on hadoop 2.7.1+ is supported
     - role: hbase_configure
+      hbase_log_dir: /var/log/hbase
       hbase_clear_configs:
         - hbase-site.xml
       hbase_site:
