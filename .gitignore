@@ -1,0 +1,5 @@
+*.pyc
+.machines.yml
+keys
+inventory.txt
+host_vars
