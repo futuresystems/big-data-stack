@@ -8,3 +8,9 @@
     - role: hbase_install
       hbase_version: 1.2.0   # hbase 1.2.X on hadoop 2.7.1+ is supported
     - role: hbase_configure
+      hbase_clear_configs:
+        - hbase-site.xml
+      hbase_site:
+        hbase.cluster.distributed: "true"
+        hbase.zookeeper.quorum: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
+        hbase.rootdir: "hdfs://futuresystems/hbase"
