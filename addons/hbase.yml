@@ -1,0 +1,46 @@
+---
+
+- name: Deploy HBase
+  become: yes
+  hosts: hadoopnodes
+  roles:
+    - role: java
+    - role: hbase_install
+      hbase_version: 1.2.0   # hbase 1.2.X on hadoop 2.7.1+ is supported
+    - role: hbase_configure
+      hbase_log_dir: /var/log/hbase
+      hbase_clear_configs:
+        - hbase-site.xml
+      hbase_site:
+        hbase.cluster.distributed: "true"
+        hbase.zookeeper.quorum: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
+        hbase.rootdir: "hdfs://futuresystems/hbase"
+
+
+- name: Start RegionServer instances
+  become: yes
+  hosts: datanodes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+        hbase_regionserver:
+          user: hadoop
+          command: bash -lc "/opt/hbase/bin/hbase regionserver start"
+          stdout_logfile: /var/log/hbase/regionserver-stdout.log
+          stderr_logfile: /var/log/hbase/regionserver-stderr.log
+
+
+- name: Start Master instances
+  become: yes
+  hosts: namenodes
+  roles:
+    - role: supervisord
+      supervisord_programs:
+        hbase_master:
+          user: hadoop
+          command: bash -lc "/opt/hbase/bin/hbase master start"
+          stdout_logfile: /var/log/hbase/master-stdout.log
+          stderr_logfile: /var/log/hbase/master-stderr.log
+
+
+

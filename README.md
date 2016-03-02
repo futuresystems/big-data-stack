@@ -34,7 +34,7 @@ directory. A playbook for deploying all the addons is given in
 - Database Layer
     * [ ] **_MongoDB_**
     * [ ] CouchDB
-    * [ ] **_HBase_**
+    * [X] HBase
     * [ ] **_MySQL_**
     * [ ] PostgreSQL
     * [ ] Memcached
