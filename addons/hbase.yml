@@ -2,6 +2,7 @@
 
 - name: Deploy HBase
   become: yes
+  hosts: hadoopnodes
   roles:
     - role: java
     - role: hbase_install
