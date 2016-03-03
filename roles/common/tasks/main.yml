@@ -39,7 +39,7 @@
   service:
     name: "{{ item }}"
     state: running
-  with_items: services_running
+  with_items: "{{ services_running }}"
   tags:
     - common_service
     - common
@@ -73,7 +73,7 @@
     system: "{{ item.value.system | default(omit) }}"
     uid: "{{ item.value.uid | default(omit) }}"
     update_password: "{{ item.value.update_password | default(omit) }}"
-  with_dict: users_managed
+  with_dict: "{{ users_managed }}"
   tags:
     - common_configure_user
     - common
@@ -85,7 +85,7 @@
     gid: "{{ item.value.gid | default(omit) }}"
     state: "{{ item.value.state | default('present') }}"
     system: "{{ item.value.system | default('no') }}"
-  with_dict: groups_managed
+  with_dict: "{{ groups_managed }}"
   tags:
     - common_configure_group
     - common
@@ -98,7 +98,7 @@
     key: "{{ item.key }}"
     user: "{{ item.user }}"
     exclusive: "{{ item.exclusive | default(False) }}"
-  with_items: authorized_keys
+  with_items: "{{ authorized_keys }}"
   tags:
     - common_configure_user
     - common
@@ -112,7 +112,7 @@
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: 0700
-  with_items: private_keys
+  with_items: "{{ private_keys }}"
   tags:
     - common_configure_user
     - common
@@ -128,7 +128,7 @@
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: 0600
-  with_items: private_keys
+  with_items: "{{ private_keys }}"
   tags:
     - common_configure_user
     - common
@@ -142,7 +142,7 @@
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode | default('0700') }}"
     state: directory
-  with_dict: directories
+  with_dict: "{{ directories }}"
   tags:
     - common_configure
     - configure
