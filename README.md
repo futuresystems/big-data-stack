@@ -13,7 +13,7 @@ directory. A playbook for deploying all the addons is given in
 
 - Analytics Layer
    * [ ] [BLAS](http://www.netlib.org/blas/)
-   * [ ] LAPACK(http://www.netlib.org/lapack/)
+   * [ ] [LAPACK](http://www.netlib.org/lapack/)
    * [ ] [Mahout](http://mahout.apache.org/)
    * [ ] [**_MLlib_**](http://spark.apache.org/docs/latest/mllib-guide.html)
    * [ ] [MLbase](http://www.mlbase.org/)
