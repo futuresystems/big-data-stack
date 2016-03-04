@@ -14,23 +14,23 @@ directory. A playbook for deploying all the addons is given in
 - Analytics Layer
    * [ ] BLAS
    * [ ] LAPACK
-   * [ ] Mahout
+   * [ ] [Mahout](http://mahout.apache.org/)
    * [ ] **_MLlib_**
    * [ ] MLbase
-   * [X] Java
+   * [X] [Java](https://www.java.com/en/)
    * [ ] R+libraries
-   * [ ] **_Python_**
-      * [ ] Pandas
-      * [ ] Scikit-learn
+   * [ ] [**_Python_**](https://www.python.org/)
+      * [ ] [Pandas](http://pandas.pydata.org/)
+      * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
 - Data Processing Layer
-   * [X] Hadoop MapReduce
-   * [X] Spark
-   * [ ] Tez
-   * [ ] Hama
-   * [ ] **_Storm_**
-   * [ ] Hive
-   * [X] Pig
-   * [ ] **_Flink_**
+   * [X] [Hadoop MapReduce](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
+   * [X] [Spark](http://spark.apache.org/)
+   * [ ] [Tez](https://tez.apache.org/)
+   * [ ] [Hama](https://hama.apache.org/)
+   * [ ] [**_Storm_**](http://storm.apache.org/)
+   * [ ] [Hive](https://hive.apache.org/)
+   * [X] [Pig](https://pig.apache.org/)
+   * [ ] [**_Flink_**](https://flink.apache.org/)
 - Database Layer
     * [ ] **_MongoDB_**
     * [ ] CouchDB
