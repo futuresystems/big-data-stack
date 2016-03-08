@@ -98,7 +98,7 @@ datanodes = group('datanodes', [(data, xrange(N_DATA))])
 frontends = group('frontendnodes', [(frontend, xrange(N_FRONTEND))])
 glusternodes = group('glusternodes', [(gluster, xrange(N_GLUSTER))])
 hadoopnodes = combine('hadoopnodes', namenodes, datanodes,
-                      journalnodes, historyservers)
+                      journalnodes, historyservers, frontends)
 loadbalancer = group('loadbalancernodes', [(loadbalancer,
                                             xrange(N_LOADBALANCER))])
 monitor = group('monitornodes', [(monitor, xrange(N_MONITOR))])
