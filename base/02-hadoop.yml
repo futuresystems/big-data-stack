@@ -19,7 +19,7 @@
       with_items:
         - hadoop
 
-- name: common:!frontend
+- name: configure users and limits
   hosts: hadoopnodes
   become: yes
   roles:
