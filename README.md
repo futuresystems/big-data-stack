@@ -77,6 +77,15 @@ directory. A playbook for deploying all the addons is given in
    Pig and Spark addons.
 
 
+Sidenote: you may want to pass the `-f <N>` flag to `ansible-playbook` to use `N` parallel connections.
+This will make the deployment go faster.
+For example:
+
+```
+$ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) # etc ...
+```
+
+
 # License
 
 Please see the `LICENSE` file in the root directory of the repository.
