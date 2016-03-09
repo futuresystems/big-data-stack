@@ -15,7 +15,7 @@ directory. A playbook for deploying all the addons is given in
    * [ ] [BLAS](http://www.netlib.org/blas/)
    * [ ] [LAPACK](http://www.netlib.org/lapack/)
    * [ ] [Mahout](http://mahout.apache.org/)
-   * [ ] [**_MLlib_**](http://spark.apache.org/docs/latest/mllib-guide.html)
+   * [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
    * [ ] [MLbase](http://www.mlbase.org/)
    * [X] [Java](https://www.java.com/en/)
    * [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
