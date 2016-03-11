@@ -87,6 +87,13 @@ $ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) #
 ```
 
 
+# Examples
+
+See the `examples` directory:
+
+- `nist_finterprint`: fingerprint analysis using Spark with results pushed to HBase
+
+
 # License
 
 Please see the `LICENSE` file in the root directory of the repository.
@@ -99,7 +106,7 @@ Please see the `LICENSE` file in the root directory of the repository.
 1. Submit a pull request to the `unstable` branch
 
 
-# Stack Components
+<!-- # Stack Components -->
 
 <!-- This is a list of the components with the associated information: -->
 <!-- - description of purpose -->
