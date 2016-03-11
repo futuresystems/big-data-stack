@@ -19,9 +19,9 @@ Legend:
 
 ## Analytics Layer
 
-- [ ] [BLAS](http://www.netlib.org/blas/)
-- [ ] [LAPACK](http://www.netlib.org/lapack/)
-- [ ] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
+- [X] [BLAS](http://www.netlib.org/blas/)
+- [X] [LAPACK](http://www.netlib.org/lapack/)
+- [X] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
 - [ ] [Mahout](http://mahout.apache.org/)
 - [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
 - [ ] [MLbase](http://www.mlbase.org/)
