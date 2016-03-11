@@ -11,6 +11,12 @@ directory. A playbook for deploying all the addons is given in
 
 # Stack
 
+- Legend:
+  * **_ItaliBold_**: work-in-progress
+  - [X] available
+  - [ ] planned
+
+
 - Analytics Layer
    * [ ] [BLAS](http://www.netlib.org/blas/)
    * [ ] [LAPACK](http://www.netlib.org/lapack/)
