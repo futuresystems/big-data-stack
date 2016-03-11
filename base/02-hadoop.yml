@@ -327,6 +327,7 @@
 - name: resourcemanagers
   hosts: resourcemanagers
   become: yes
+  tags: start_resourcemanager
   roles:
     - role: supervisord
       supervisord_programs:
