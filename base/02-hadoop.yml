@@ -325,7 +325,7 @@
 
 
 - name: resourcemanagers
-  hosts: resourcemanagers
+  hosts: resourcemanagernodes
   become: yes
   tags: start_resourcemanager
   roles:
