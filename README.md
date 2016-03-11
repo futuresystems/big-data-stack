@@ -30,6 +30,7 @@ directory. A playbook for deploying all the addons is given in
    * [ ] [**_Python_**](https://www.python.org/)
       * [ ] [Pandas](http://pandas.pydata.org/)
       * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
+
 ## Data Processing Layer
 
    * [X] [Hadoop MapReduce](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
