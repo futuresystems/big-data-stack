@@ -11,46 +11,47 @@ directory. A playbook for deploying all the addons is given in
 
 # Stack
 
-- Legend:
-  * **_ItaliBold_**: work-in-progress
+Legend:
   - [X] available
+  - [ ] **_ItaliBold_**: work-in-progress
   - [ ] planned
 
 
 ## Analytics Layer
 
-   * [ ] [BLAS](http://www.netlib.org/blas/)
-   * [ ] [LAPACK](http://www.netlib.org/lapack/)
-   * [ ] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
-   * [ ] [Mahout](http://mahout.apache.org/)
-   * [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
-   * [ ] [MLbase](http://www.mlbase.org/)
-   * [X] [Java](https://www.java.com/en/)
-   * [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
-   * [ ] [**_Python_**](https://www.python.org/)
-      * [ ] [Pandas](http://pandas.pydata.org/)
-      * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
+- [ ] [BLAS](http://www.netlib.org/blas/)
+- [ ] [LAPACK](http://www.netlib.org/lapack/)
+- [ ] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
+- [ ] [Mahout](http://mahout.apache.org/)
+- [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
+- [ ] [MLbase](http://www.mlbase.org/)
+- [X] [Java](https://www.java.com/en/)
+- [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
+- [ ] [**_Python_**](https://www.python.org/)
+  * [ ] [Pandas](http://pandas.pydata.org/)
+  * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
+
 
 ## Data Processing Layer
 
-   * [X] [Hadoop MapReduce](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
-   * [X] [Spark](http://spark.apache.org/)
-   * [ ] [Tez](https://tez.apache.org/)
-   * [ ] [Hama](https://hama.apache.org/)
-   * [ ] [**_Storm_**](http://storm.apache.org/)
-   * [ ] [Hive](https://hive.apache.org/)
-   * [X] [Pig](https://pig.apache.org/)
-   * [ ] [**_Flink_**](https://flink.apache.org/)
+- [X] [Hadoop MapReduce](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
+- [X] [Spark](http://spark.apache.org/)
+- [ ] [Tez](https://tez.apache.org/)
+- [ ] [Hama](https://hama.apache.org/)
+- [ ] [**_Storm_**](http://storm.apache.org/)
+- [ ] [Hive](https://hive.apache.org/)
+- [X] [Pig](https://pig.apache.org/)
+- [ ] [**_Flink_**](https://flink.apache.org/)
 
 ## Database Layer
 
-    * [ ] [**_MongoDB_**](https://www.mongodb.org/)
-    * [ ] [CouchDB](http://couchdb.apache.org/)
-    * [ ] [HBase](https://hbase.apache.org/)
-    * [ ] [**_MySQL_**](https://www.mysql.com/)
-    * [ ] [PostgreSQL](https://www.mysql.com/)
-    * [ ] [Memcached](http://memcached.org/)
-    * [ ] [Redis](http://redis.io/)
+- [ ] [**_MongoDB_**](https://www.mongodb.org/)
+- [ ] [CouchDB](http://couchdb.apache.org/)
+- [ ] [HBase](https://hbase.apache.org/)
+- [ ] [**_MySQL_**](https://www.mysql.com/)
+- [ ] [PostgreSQL](https://www.mysql.com/)
+- [ ] [Memcached](http://memcached.org/)
+- [ ] [Redis](http://redis.io/)
 
 ## Scheduling
 
