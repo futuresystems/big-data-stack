@@ -1,0 +1,30 @@
+---
+
+- name: install basic dependencies for analytics
+  hosts: hadoopnodes
+  become: yes
+  tags: analytics_dependencies
+  tasks:
+
+    - name: install
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+
+        # lapack, lapacke
+        - liblapack-dev
+        - liblapack-doc-man
+        - liblapack-doc
+        - liblapack-pic
+        - liblapack3
+        - liblapack-test
+        - liblapack3gf
+        - liblapacke
+
+        # blas
+        - libblas-dev
+        - libblas-doc
+        - libblas-test
+        - libblas3
+        - libblas3gf

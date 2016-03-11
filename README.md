@@ -19,9 +19,9 @@ Legend:
 
 ## Analytics Layer
 
-- [ ] [BLAS](http://www.netlib.org/blas/)
-- [ ] [LAPACK](http://www.netlib.org/lapack/)
-- [ ] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
+- [X] [BLAS](http://www.netlib.org/blas/)
+- [X] [LAPACK](http://www.netlib.org/lapack/)
+- [X] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
 - [ ] [Mahout](http://mahout.apache.org/)
 - [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
 - [ ] [MLbase](http://www.mlbase.org/)
@@ -94,6 +94,7 @@ Legend:
 1. Run `ansible-playbook plays-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
+1. Log into the `frontend0` node and use the `hadoop` user (`sudo su - hadoop`) to run jobs on the cluster.
 
 
 Sidenote: you may want to pass the `-f <N>` flag to `ansible-playbook` to use `N` parallel connections.
@@ -103,6 +104,9 @@ For example:
 ```
 $ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) # etc ...
 ```
+
+The `hadoop` user is present on all the nodes and is the hadoop administrator.
+If you need to change anything on HDFS, it must be done as `hadoop`.
 
 
 # Examples
