@@ -19,7 +19,7 @@
       with_items:
         - hadoop
 
-- name: common:!frontend
+- name: configure users and limits
   hosts: hadoopnodes
   become: yes
   roles:
@@ -325,8 +325,9 @@
 
 
 - name: resourcemanagers
-  hosts: resourcemanagers
+  hosts: resourcemanagernodes
   become: yes
+  tags: start_resourcemanager
   roles:
     - role: supervisord
       supervisord_programs:

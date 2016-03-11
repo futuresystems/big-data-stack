@@ -12,40 +12,41 @@ directory. A playbook for deploying all the addons is given in
 # Stack
 
 - Analytics Layer
-   * [ ] BLAS
-   * [ ] LAPACK
-   * [ ] Mahout
-   * [ ] **_MLlib_**
-   * [ ] MLbase
-   * [X] Java
-   * [ ] R+libraries
-   * [ ] **_Python_**
-      * [ ] Pandas
-      * [ ] Scikit-learn
+   * [ ] [BLAS](http://www.netlib.org/blas/)
+   * [ ] [LAPACK](http://www.netlib.org/lapack/)
+   * [ ] [LAPACKE](http://www.netlib.org/lapack/lapacke.html)
+   * [ ] [Mahout](http://mahout.apache.org/)
+   * [X] [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
+   * [ ] [MLbase](http://www.mlbase.org/)
+   * [X] [Java](https://www.java.com/en/)
+   * [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
+   * [ ] [**_Python_**](https://www.python.org/)
+      * [ ] [Pandas](http://pandas.pydata.org/)
+      * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
 - Data Processing Layer
-   * [X] Hadoop MapReduce
-   * [X] Spark
-   * [ ] Tez
-   * [ ] Hama
-   * [ ] **_Storm_**
-   * [ ] Hive
-   * [X] Pig
-   * [ ] **_Flink_**
+   * [X] [Hadoop MapReduce](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
+   * [X] [Spark](http://spark.apache.org/)
+   * [ ] [Tez](https://tez.apache.org/)
+   * [ ] [Hama](https://hama.apache.org/)
+   * [ ] [**_Storm_**](http://storm.apache.org/)
+   * [ ] [Hive](https://hive.apache.org/)
+   * [X] [Pig](https://pig.apache.org/)
+   * [ ] [**_Flink_**](https://flink.apache.org/)
 - Database Layer
-    * [ ] **_MongoDB_**
-    * [ ] CouchDB
-    * [X] HBase
-    * [ ] **_MySQL_**
-    * [ ] PostgreSQL
-    * [ ] Memcached
-    * [ ] Redis
+    * [ ] [**_MongoDB_**](https://www.mongodb.org/)
+    * [ ] [CouchDB](http://couchdb.apache.org/)
+    * [ ] [HBase](https://hbase.apache.org/)
+    * [ ] [**_MySQL_**](https://www.mysql.com/)
+    * [ ] [PostgreSQL](https://www.mysql.com/)
+    * [ ] [Memcached](http://memcached.org/)
+    * [ ] [Redis](http://redis.io/)
 - Scheduling:
-  * [X] YARN
-  * [ ] Mesos
+  * [X] [YARN](https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/FairScheduler.html)
+  * [ ] [Mesos](http://mesos.apache.org/)
 - Storage
-  * [X] HDFS
+  * [X] [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html)
 - Monitoring
-  * [X] Ganglia
+  * [X] [Ganglia](http://ganglia.info/?p=88)
 
 
 # Usage
@@ -75,6 +76,15 @@ directory. A playbook for deploying all the addons is given in
 1. Run `ansible-playbook plays-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
+
+
+Sidenote: you may want to pass the `-f <N>` flag to `ansible-playbook` to use `N` parallel connections.
+This will make the deployment go faster.
+For example:
+
+```
+$ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) # etc ...
+```
 
 
 # License
