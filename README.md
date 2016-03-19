@@ -91,7 +91,7 @@ Legend:
     done
     ```
 
-1. Run `ansible-playbook plays-hadoop.yml` to install the base system
+1. Run `ansible-playbook play-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
 1. Log into the `frontend0` node and use the `hadoop` user (`sudo su - hadoop`) to run jobs on the cluster.
