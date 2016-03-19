@@ -87,7 +87,7 @@ Legend:
     ```
     mkdir host_vars
     for i in 0 1 2; do
-      echo "zookeeper_id: $(( i+1 ))" >host_vars/zk$i`
+      echo "zookeeper_id: $(( i+1 ))" > host_vars/zk$i
     done
     ```
 
