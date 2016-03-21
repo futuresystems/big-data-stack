@@ -47,7 +47,7 @@ Legend:
 
 - [ ] [**_MongoDB_**](https://www.mongodb.org/)
 - [ ] [CouchDB](http://couchdb.apache.org/)
-- [ ] [HBase](https://hbase.apache.org/)
+- [X] [HBase](https://hbase.apache.org/)
 - [ ] [**_MySQL_**](https://www.mysql.com/)
 - [ ] [PostgreSQL](https://www.mysql.com/)
 - [ ] [Memcached](http://memcached.org/)
