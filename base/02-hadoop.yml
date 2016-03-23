@@ -16,8 +16,7 @@
 
     - name: generate ssh key for user
       local_action: command ssh-keygen -t rsa -b 4096 -N "" -f "keys/{{ item }}"
-      with_items:
-        - hadoop
+      with_items: "{{ ssh_users }}"
 
 - name: configure users and limits
   hosts: hadoopnodes
