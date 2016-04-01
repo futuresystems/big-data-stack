@@ -1,0 +1,7 @@
+ansible==1.9.4
+python-novaclient
+python-keystoneclient
+traits
+easydict
+-e git://github.com/futuresystems/virtual-cluster-libs#egg=virtual-cluster-libs
+-e git://github.com/badi/pxul#egg=pxul
