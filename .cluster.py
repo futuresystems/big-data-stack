@@ -71,37 +71,35 @@ gluster = lambda i: {
 
 from vcl.specification import expand, group, combine, chain
 
-N_ZK = 3
 N_MASTER = 3
 N_DATA = 3
-N_FRONTEND = 1
-N_LOADBALANCER = 0
-N_MONITOR = 1
-N_GLUSTER = 0
 
 machines = list(chain(
-    expand(zk, N_ZK),
     expand(master, N_MASTER),
-    expand(data, N_DATA),
-    expand(frontend, N_FRONTEND),
-    expand(loadbalancer, N_LOADBALANCER),
-    expand(monitor, N_MONITOR),
-    expand(gluster, N_GLUSTER)
+    # expand(data, N_DATA),
 ))
 
-zookeepers = group('zookeepernodes', [(zk, xrange(N_ZK))])
-namenodes = group('namenodes', [(master, [0,1])])
-journalnodes = group('journalnodes', [(master, xrange(N_MASTER))])
-historyservers = group('historyservernodes', [(master, [2])])
-resourcemanagers = group('resourcemanagernodes', [(master, [0,1])])
-datanodes = group('datanodes', [(data, xrange(N_DATA))])
-frontends = group('frontendnodes', [(frontend, xrange(N_FRONTEND))])
-glusternodes = group('glusternodes', [(gluster, xrange(N_GLUSTER))])
+_zookeepernodes = [(master, [0,1,2])]
+_namenodes = [(master, [0, 1])]
+_journalnodes = [(master, [0,1,2])]
+_historyservers = [(master, [2])]
+_resourcemanagers = [(master, [0,1])]
+_datanodes = [(master, xrange(N_DATA))]
+_frontends = [(master, [0])]
+_monitor = [(master, [2])]
+
+
+
+zookeepers = group('zookeepernodes', _zookeepernodes)
+namenodes = group('namenodes', _namenodes)
+journalnodes = group('journalnodes', _journalnodes)
+historyservers = group('historyservernodes', _historyservers)
+resourcemanagers = group('resourcemanagernodes', _resourcemanagers)
+datanodes = group('datanodes', _datanodes)
+frontends = group('frontendnodes', _frontends)
 hadoopnodes = combine('hadoopnodes', namenodes, datanodes,
                       journalnodes, historyservers, frontends)
-loadbalancer = group('loadbalancernodes', [(loadbalancer,
-                                            xrange(N_LOADBALANCER))])
-monitor = group('monitornodes', [(monitor, xrange(N_MONITOR))])
+monitor = group('monitornodes', _monitor)
 
 inventory = [
     zookeepers,
@@ -111,9 +109,7 @@ inventory = [
     resourcemanagers,
     datanodes,
     frontends,
-    glusternodes,
     hadoopnodes,
-    loadbalancer,
     monitor,
 ]
 
