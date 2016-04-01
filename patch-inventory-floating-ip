@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import yaml
+import sys
+
+
+MACHINES = '.machines.yml'
+INVENTORY = 'inventory.txt'
+
+nodes = yaml.load(open(MACHINES))
+inventory = open(INVENTORY).read()
+
+
+for node in nodes:
+    if nodes[node]['create_floating_ip']:
+        floating = nodes[node]['floating_ip']
+        internal = nodes[node]['ip']
+        inventory = inventory.replace(internal, floating)
+
+sys.stderr.write(inventory + '\n')
+with open(INVENTORY, 'w') as fd:
+    fd.write(inventory)
