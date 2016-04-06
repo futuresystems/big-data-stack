@@ -110,6 +110,19 @@ The `hadoop` user is present on all the nodes and is the hadoop administrator.
 If you need to change anything on HDFS, it must be done as `hadoop`.
 
 
+# Monitoring
+
+You can access the Ganglia display on the monitoring node.
+The interface is kept local to the virtual cluster so you need log in with X forwarding enable and install a browser.
+For example:
+
+```
+[badi@india]: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@123.45.67.89
+[ubuntu@master2]: sudo apt-get -y install firefox
+[ubuntu@master2]: firefox http://localhost/ganglia
+```
+
+
 # Examples
 
 See the `examples` directory:
