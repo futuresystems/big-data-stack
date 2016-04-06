@@ -110,6 +110,11 @@ The `hadoop` user is present on all the nodes and is the hadoop administrator.
 If you need to change anything on HDFS, it must be done as `hadoop`.
 
 
+# Access
+
+`vcl ssh` can be used as shorthand to access the nodes.
+It looks up the ip address in the generated .machines.yml, using the floating ip if available.
+
 # Monitoring
 
 You can access the Ganglia display on the monitoring node.
