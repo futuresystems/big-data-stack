@@ -117,7 +117,7 @@ The interface is kept local to the virtual cluster so you need log in with X for
 For example:
 
 ```
-[badi@india]: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@123.45.67.89
+[badi@india]: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@123.45.67.89 -X
 [ubuntu@master2]: sudo apt-get -y install firefox
 [ubuntu@master2]: firefox http://localhost/ganglia
 ```
