@@ -1,0 +1,14 @@
+
+
+* v0.2.0 [2016-04-06 Wed]
+
+  - use m1.small flavor by default
+  - vcl boot sets floating ips in inventory
+  - vcl ssh works with floating ip
+  - switch to binary version of spark which significantly reduces deployment time
+  - fix permissions for uploading data to hdfs for nist example
+  - emphasize need for --recursive when cloning
+  - start zookeeper before formatting namenode
+  - update readme on instructions on accessing ganglia interface
+  - update readme on frontend access
+  - shrink deployment to three nodes

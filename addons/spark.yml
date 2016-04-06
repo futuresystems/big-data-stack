@@ -8,8 +8,5 @@
     - role: maven
     - role: spark
       spark_version: 1.6.0
-      spark_package_type: src
-      spark_build_hadoop_profile: hadoop-2.6
-      spark_build_hadoop_version: 2.7.1
-      spark_build_skip_tests: yes
-      spark_build_clean: no
+      spark_package_type: bin
+

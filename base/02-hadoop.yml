@@ -260,6 +260,17 @@
           stderr_logfile: /hdfs/journalnode-stderr.log
 
 
+- name: start zookeeper
+  hosts: zookeepernodes
+  become: yes
+  tags:
+    - start_zookeeper
+  tasks:
+    - name: start
+      supervisorctl:
+        name: zookeeper
+        state: started
+
 
 - name: initialize namenodes 1
   hosts: namenodes[0]

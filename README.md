@@ -69,7 +69,8 @@ Legend:
 
 # Usage
 
-1. Download this repository using `git clone --recursive`.
+1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
+1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
 1. Launch the cluster using `vcl boot -p openstack -P $USER-` This
@@ -87,14 +88,14 @@ Legend:
     ```
     mkdir host_vars
     for i in 0 1 2; do
-      echo "zookeeper_id: $(( i+1 ))" > host_vars/zk$i
+      echo "zookeeper_id: $(( i+1 ))" > host_vars/master$i
     done
     ```
 
 1. Run `ansible-playbook play-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
-1. Log into the `frontend0` node and use the `hadoop` user (`sudo su - hadoop`) to run jobs on the cluster.
+1. Log into the frontend node (see the `[frontends]` group in the inventory) and use the `hadoop` user (`sudo su - hadoop`) to run jobs on the cluster.
 
 
 Sidenote: you may want to pass the `-f <N>` flag to `ansible-playbook` to use `N` parallel connections.
@@ -107,6 +108,24 @@ $ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) #
 
 The `hadoop` user is present on all the nodes and is the hadoop administrator.
 If you need to change anything on HDFS, it must be done as `hadoop`.
+
+
+# Access
+
+`vcl ssh` can be used as shorthand to access the nodes.
+It looks up the ip address in the generated .machines.yml, using the floating ip if available.
+
+# Monitoring
+
+You can access the Ganglia display on the monitoring node.
+The interface is kept local to the virtual cluster so you need log in with X forwarding enable and install a browser.
+For example:
+
+```
+[badi@india]: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@123.45.67.89 -X
+[ubuntu@master2]: sudo apt-get -y install firefox
+[ubuntu@master2]: firefox http://localhost/ganglia
+```
 
 
 # Examples
