@@ -70,7 +70,7 @@ Legend:
 # Usage
 
 1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
-1. Download this repository using `git clone --recursive`.
+1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
 1. Launch the cluster using `vcl boot -p openstack -P $USER-` This
