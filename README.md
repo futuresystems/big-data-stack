@@ -69,6 +69,7 @@ Legend:
 
 # Usage
 
+1. Make sure you public key is added to [github.com](https://github.com/settings/keys)
 1. Download this repository using `git clone --recursive`.
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
