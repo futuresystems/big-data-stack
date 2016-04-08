@@ -1,5 +1,11 @@
 
-
+* v0.2.2
+  [2016-04-08 Fri]
+  - upgrades vcl to v0.2.1 ([[https://github.com/futuresystems/virtual-cluster-libs/issues/3][fixes a bug during boot]])
+  - describe upgrade procedure in readme
+* v0.2.1
+  [2016-04-06 Wed]
+  - fix commit for spark role submodule
 * v0.2.0 [2016-04-06 Wed]
 
   - use m1.small flavor by default

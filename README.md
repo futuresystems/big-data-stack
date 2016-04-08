@@ -128,6 +128,16 @@ For example:
 ```
 
 
+# Upgrading
+
+Whenever a new release is made, you can get the changes by either cloning a fresh repository (as above), or pulling changes from the upstream master branch and updating the submodules:
+
+```
+$ git pull https://github.com/futuresystems/big-data-stack master
+$ git submodule update
+```
+
+
 # Examples
 
 See the `examples` directory:
