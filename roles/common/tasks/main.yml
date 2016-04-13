@@ -12,6 +12,7 @@
 - name: update cache
   apt:
     update_cache: yes
+    cache_valid_time: "{{ cache_valid_time }}"
   tags: common
 
 - name: install packages
