@@ -1,4 +1,9 @@
 
+* v0.2.3
+  [2016-04-13 Wed]
+  - bump vcl to v0.2.2
+  - upgrade hbase submodule to fix broken url (new HBase release removed the previous one we pointed to)
+  - set default ansible valid cache time for apt of 24 hours
 * v0.2.2
   [2016-04-08 Fri]
   - upgrades vcl to v0.2.1 ([[https://github.com/futuresystems/virtual-cluster-libs/issues/3][fixes a bug during boot]])
