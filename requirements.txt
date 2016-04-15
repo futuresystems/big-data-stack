@@ -3,7 +3,7 @@ python-novaclient==3.2.0
 python-keystoneclient==2.3.1
 traits==4.5.0
 easydict==1.6
--e git://github.com/futuresystems/virtual-cluster-libs@v0.2.2#egg=virtual_cluster_libs-master
+-e git://github.com/futuresystems/virtual-cluster-libs@v0.2.3#egg=virtual_cluster_libs-master
 -e git://github.com/badi/pxul@a67d20c32821720f7b3df15160c1663cba01e4c8#egg=pxul-master
 ## The following requirements were added by pip freeze:
 Babel==2.2.0
