@@ -121,3 +121,25 @@ spec = {
 }
 
 
+######################################################################
+# hack to define zookeeper_id for zookeeper nodes automatically
+
+host_vars = 'host_vars'
+if not os.path.exists(host_vars):
+    os.makedirs(host_vars)
+
+import time
+zk_id = 0
+for grp in zookeepers.itervalues():
+    for host in grp:
+        zk_id += 1
+        host_file = os.path.join(host_vars, host)
+        if os.path.exists(host_file):
+            print 'WARNING', host_file, 'already exists'
+            now = time.time()
+            bkp = host_file + '.' + str(now)
+            os.rename(host_file, bkp)
+        entry = 'zookeeper_id: {}\n'.format(zk_id)
+        print host_file, 'WROTE', entry
+        with open(host_file, 'w') as fd:
+            fd.write(entry)
