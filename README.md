@@ -135,6 +135,7 @@ Whenever a new release is made, you can get the changes by either cloning a fres
 ```
 $ git pull https://github.com/futuresystems/big-data-stack master
 $ git submodule update
+$ pip install -U -r requirements.txt
 ```
 
 
