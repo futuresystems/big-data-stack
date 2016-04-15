@@ -1,4 +1,9 @@
 
+* v0.2.4
+  [2016-04-15 Fri]
+  - upgrade vcl v0.2.2 -> v0.2.3 (more informative output)
+  - teach .cluster.py assign zookeeper_id for the zookeeper nodes
+    This means you no longer have to manually set the zookeeper_id, a step which was prone to be forgotten.
 * v0.2.3
   [2016-04-13 Wed]
   - bump vcl to v0.2.2
