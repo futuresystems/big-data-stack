@@ -69,19 +69,24 @@ Legend:
 
 # Usage
 
-Make sure to start an ssh-agent so you don't need to retype you passphrase multiple times.
+1. Make sure to start an ssh-agent so you don't need to retype you passphrase multiple times.
 We've also noticied that if you are running on `india`, Ansible may be unable to access the node and complain with something like:
 
-```
-master0 | UNREACHABLE! => {
-    "changed": false,
-    "msg": "ssh cc@129.114.110.126:22 : Private key file is encrypted\nTo connect as a different user, use -u <username>.",
-    "unreachable": true
-}
-```
+   ```
+   master0 | UNREACHABLE! => {
+       "changed": false,
+       "msg": "ssh cc@129.114.110.126:22 : Private key file is encrypted\nTo connect as a different user, use -u <username>.",
+       "unreachable": true
+   }
+   ```
 
-1. `eval $(ssh-agent)`
-2. `ssh-add`
+
+   To start the agent:
+
+   ```
+   badi@i136 ~$ eval $(ssh-agent)
+   badi@i136 ~$ ssh-add
+   ```
 
 
 1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
