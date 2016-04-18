@@ -69,6 +69,26 @@ Legend:
 
 # Usage
 
+1. Make sure to start an ssh-agent so you don't need to retype you passphrase multiple times.
+We've also noticied that if you are running on `india`, Ansible may be unable to access the node and complain with something like:
+
+   ```
+   master0 | UNREACHABLE! => {
+       "changed": false,
+       "msg": "ssh cc@129.114.110.126:22 : Private key file is encrypted\nTo connect as a different user, use -u <username>.",
+       "unreachable": true
+   }
+   ```
+
+
+   To start the agent:
+
+   ```
+   badi@i136 ~$ eval $(ssh-agent)
+   badi@i136 ~$ ssh-add
+   ```
+
+
 1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
 1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 1. Install the requirements using `pip install -r requirements.txt`
@@ -83,7 +103,7 @@ Legend:
 1. Ensure `ssh_bastion_config` is to your liking (it assumes you are
    using the openstack cluster on FutureSystems).
 1. Run `ansible all -m ping` to make sure all nodes can be managed.
-1. Define `zookeeper_id` for each zookeeper node. Adapt the following:
+1. ~~Define `zookeeper_id` for each zookeeper node. Adapt the following:~~ (**NO LONGER NEEDED as of v0.2.4**)
 
     ```
     mkdir host_vars
