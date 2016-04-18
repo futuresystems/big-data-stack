@@ -100,7 +100,7 @@ To set up ssh agent:
 1. Ensure `ssh_bastion_config` is to your liking (it assumes you are
    using the openstack cluster on FutureSystems).
 1. Run `ansible all -m ping` to make sure all nodes can be managed.
-1. ~Define `zookeeper_id` for each zookeeper node. Adapt the following:~ (*NO LONGER NEEDED as of v0.2.4)
+1. ~Define `zookeeper_id` for each zookeeper node. Adapt the following~: (**NO LONGER NEEDED as of v0.2.4**)
 
     ```
     mkdir host_vars
