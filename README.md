@@ -70,7 +70,7 @@ Legend:
 # Usage
 
 Make sure to start an ssh-agent so you don't need to retype you passphrase multiple times.
-We've also noticied that if you are running on =india=, Ansible may be unable to access the node and complain with something like:
+We've also noticied that if you are running on `india`, Ansible may be unable to access the node and complain with something like:
 
 ```
 master0 | UNREACHABLE! => {
@@ -79,8 +79,6 @@ master0 | UNREACHABLE! => {
     "unreachable": true
 }
 ```
-
-To set up ssh agent:
 
 1. `eval $(ssh-agent)`
 2. `ssh-add`
