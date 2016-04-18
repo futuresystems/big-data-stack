@@ -69,6 +69,23 @@ Legend:
 
 # Usage
 
+Make sure to start an ssh-agent so you don't need to retype you passphrase multiple times.
+We've also noticied that if you are running on =india=, Ansible may be unable to access the node and complain with something like:
+
+```
+master0 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "ssh cc@129.114.110.126:22 : Private key file is encrypted\nTo connect as a different user, use -u <username>.",
+    "unreachable": true
+}
+```
+
+To set up ssh agent:
+
+1. `eval $(ssh-agent)`
+2. `ssh-add`
+
+
 1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
 1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 1. Install the requirements using `pip install -r requirements.txt`
