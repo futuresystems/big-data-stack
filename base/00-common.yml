@@ -3,6 +3,7 @@
 - name: common
   hosts: all
   become: yes
+  tags: common
   roles:
 
     - role: common
@@ -40,6 +41,7 @@
 - name: frontend packages
   hosts: frontends
   become: yes
+  tags: common
   roles:
     - role: common
       package_list:
