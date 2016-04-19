@@ -13,10 +13,14 @@ iface_internal: eth0
 generate_hosts_file: false
 
 #param: packages to install :: [str]
-package_list: []
+package_list_debian: []
+package_list_redhat: []
+package_list_common: []
 
 #param: services that should be running :: [str]
-services_running: []
+services_running_debian: []
+services_running_redhat: []
+services_running_common: []
 
 #param: users to create :: [dict]
 # accepts the 'groups', 'createhome', and 'state' parameters of the

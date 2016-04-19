@@ -10,18 +10,27 @@
       use_ansible_inventory_hostname: true
       generate_hosts_file: true
 
-      package_list:
+      package_list_debian:
         - emacs24-nox
+        - ssh
+
+      package_list_redhat:
+        - emacs-nox
+        - openssh-clients
+
+      package_list_common:
         - curl
         - httpie
-        - ssh
         - rsync
         - parted
         - iotop
         - facter
 
-      services_running:
+      services_running_debian:
         - ssh
+
+      services_running_redhat:
+        - sshd
 
       groups_managed:
         hadoopadmin:
