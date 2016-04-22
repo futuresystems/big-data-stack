@@ -89,7 +89,7 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
    ```
 
 
-1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
+1. Make sure your public key is added to [github.com](https://github.com/settings/keys) **IMPORTANT** check the fingerprint `ssh-keygen -lf ~/.ssh/id_rsa` and make sure it is in your [list of keys](https://github.com/settings/keys)!
 1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
