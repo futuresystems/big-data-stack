@@ -1,4 +1,6 @@
 
+* v0.2.5
+  - add support for CentOS7 ([[https://github.com/futuresystems/big-data-stack/pull/61][#61]])
 * v0.2.4
   [2016-04-15 Fri]
   - upgrade vcl v0.2.2 -> v0.2.3 (more informative output)
