@@ -9,17 +9,31 @@
     - common
     - install
 
-- name: update cache
+- name: update cache (Debian)
+  when: ansible_os_family == 'Debian'
   apt:
     update_cache: yes
     cache_valid_time: "{{ cache_valid_time }}"
   tags: common
 
-- name: install packages
+- name: install packages (Debian)
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
     state: present
-  with_items: "{{ package_list }}"
+  with_items: "{{ package_list_debian | union(package_list_common) }}"
+  tags:
+    - common_install
+    - common
+    - install
+
+- name: install packages (RedHat)
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ package_list_redhat | union(package_list_common) }}"
   tags:
     - common_install
     - common
@@ -36,15 +50,26 @@
     - configure
     - network
 
+- name: set running service names (Debian)
+  when: ansible_os_family == 'Debian'
+  set_fact:
+    _services_running: "{{ services_running_debian }}"
+
+- name: set running service names (RedHat)
+  when: ansible_os_family == 'RedHat'
+  set_fact:
+    _services_running: "{{ services_running_redhat }}"
+
 - name: ensure services running
   service:
     name: "{{ item }}"
     state: running
-  with_items: "{{ services_running }}"
+  with_items: "{{ _services_running | union(services_running_common) }}"
   tags:
     - common_service
     - common
     - service
+
 
 - name: create users
   user:
