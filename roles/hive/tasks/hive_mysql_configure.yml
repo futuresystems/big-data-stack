@@ -1,0 +1,21 @@
+---
+
+ - name: hive lib
+   file: 
+     path: "{{ hive_lib }}"
+     state: directory
+
+ - name: symlink
+   file:
+     path: "{{ hive_lib }}/mysql-connector-java.jar"
+     src: /usr/share/java/mysql-connector-java.jar
+     state: link
+   tags:
+     - mysql_connector_symlink
+
+ - name: Templates a file to create hive site.xml
+   template: 
+      src: "hive-site.xml.j2"  
+      dest: "{{ hive_conf }}/hive-site.xml" 
+
+

@@ -1,0 +1,11 @@
+---
+- name: install hive
+  hosts: frontendnodes
+  become: yes
+  roles:
+    - role: java
+    - role: mysql
+      when: HIVE_METASTORE == 'mysql'
+    - role: hive
+
+
