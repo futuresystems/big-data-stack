@@ -11,10 +11,10 @@ defaults = {
 
     'openstack': {
         'flavor': 'm1.small',
-        'image': 'CC-Ubuntu14.04',
+        'image': 'Ubuntu-14.04-64',
         'key_name': gethostname(),
         'network': '{}-net'.format(os.getenv('OS_PROJECT_NAME')),
-        'create_floating_ip': True, 
+        'create_floating_ip': False, 
         'floating_ip_pool': 'ext-net',
         'security_groups': ['default'],
     },
