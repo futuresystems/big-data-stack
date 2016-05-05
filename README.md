@@ -13,7 +13,7 @@ directory. A playbook for deploying all the addons is given in
 
 Legend:
   - [X] available
-  - [ ] **_ItaliBold_**: work-in-progress
+  - [ ] **_ItalicBold_**: work-in-progress
   - [ ] planned
 
 
