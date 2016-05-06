@@ -39,7 +39,7 @@ Legend:
 - [ ] [Tez](https://tez.apache.org/)
 - [ ] [Hama](https://hama.apache.org/)
 - [ ] [**_Storm_**](http://storm.apache.org/)
-- [ ] [Hive](https://hive.apache.org/)
+- [X] [Hive](https://hive.apache.org/)
 - [X] [Pig](https://pig.apache.org/)
 - [ ] [**_Flink_**](https://flink.apache.org/)
 
@@ -48,7 +48,7 @@ Legend:
 - [ ] [**_MongoDB_**](https://www.mongodb.org/)
 - [ ] [CouchDB](http://couchdb.apache.org/)
 - [X] [HBase](https://hbase.apache.org/)
-- [ ] [**_MySQL_**](https://www.mysql.com/)
+- [X] [MySQL](https://www.mysql.com/)
 - [ ] [PostgreSQL](https://www.mysql.com/)
 - [ ] [Memcached](http://memcached.org/)
 - [ ] [Redis](http://redis.io/)
