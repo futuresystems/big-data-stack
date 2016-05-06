@@ -1,0 +1,59 @@
+--- 
+ 
+ 
+ - name: download hive 
+   get_url: 
+     url: "https://www.us.apache.org/dist/hive/stable/apache-hive-{{ hive_version }}-bin.tar.gz" 
+     dest: "{{ ansible_env.PWD }}/apache-hive-{{ hive_version }}-bin.tar.gz" 
+     sha256sum: "{{ _hive_bin_sha256[hive_version] }}" 
+     validate_certs: no 
+   tags: 
+     - hive 
+     - hive_download 
+ 
+ 
+ - name: extract hive 
+   unarchive: 
+     dest: "{{ hive_install_dest }}" 
+     src: "{{ ansible_env.PWD }}/apache-hive-{{ hive_version }}-bin.tar.gz" 
+     creates: "{{ hive_install_dest }}/apache-hive-{{ hive_version }}-bin" 
+     copy: no 
+   tags: 
+     - hive 
+     - hive_extract 
+ 
+ 
+ - name: symlink 
+   file: 
+     path: "{{ hive_install_dest }}/hive" 
+     src:  "{{ hive_install_dest }}/apache-hive-{{ hive_version }}-bin" 
+     state: link 
+   tags: 
+     - hive 
+     - hive_symlink 
+ 
+ 
+ - name: add to profile.d 
+   lineinfile: 
+     dest: "/etc/profile.d/hive.sh" 
+     line: "export {{ item }}" 
+     create: yes 
+   with_items: 
+     - HIVE_HOME={{ hive_install_dest }}/hive 
+     - PATH=$PATH:$HIVE_HOME/bin 
+   tags: 
+     - hive 
+     - hive_profile_d 
+     - profile_d 
+     - hive_install 
+     - install
+
+
+ - include: hive_mysql_configure.yml 
+   when: HIVE_METASTORE == 'mysql'
+
+ - include: mysql_metastore.yml 
+   when: HIVE_METASTORE == 'mysql'
+
+
+ 
