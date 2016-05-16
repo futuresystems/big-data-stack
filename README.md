@@ -98,6 +98,14 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
      
 1. Install the requirements using `pip install -r requirements.txt`
 1. Edit `.cluster.py` to define the machines in the cluster.
+
+
+     E.g. on Chameleon cloud, the following changes should be made:
+     ```
+     -	‘image’: CC-Ubuntu14.04
+     -	‘create_floating_ip’: True
+     ```
+
 1. Launch the cluster using `vcl boot -p openstack -P $USER-` This
    will start the machines on whatever openstack environment is
    currently available (via the `$OS_PROJECT_NAME`, `$OS_AUTH_URL`,
