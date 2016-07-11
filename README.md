@@ -45,6 +45,7 @@ Legend:
 
 ## Database Layer
 
+- [X] [Drill](https://drill.apache.org/)
 - [ ] [MongoDB](https://www.mongodb.org/)
 - [ ] [CouchDB](http://couchdb.apache.org/)
 - [X] [HBase](https://hbase.apache.org/)
