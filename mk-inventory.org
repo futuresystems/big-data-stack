@@ -12,7 +12,12 @@ changes, make sure to edit {{{this-file}}}, not the tangled
 (generated) file.
 
 To update the code, open {{{this-file}}} in Emacs (with Org-Mode
-installed) and execute =C-c C-v t=
+installed) and execute =C-c C-v t=.
+
+Note: if you are reading this on GitHub, be aware that the org-mode
+renderer doesn't respect indentation. Thus if the definition of a
+class is broken into several src blocks, the indentation (as shown in
+GitHub) will be reset to 0.
 
 
 * Purpose
