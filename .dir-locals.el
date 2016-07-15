@@ -1,0 +1,5 @@
+((nil . ((eval . (setq org-src-preserve-indentation t))
+         (eval . (global-set-key (kbd "C-c C-v t") '(lambda ()
+                                                        (interactive)
+                                                        (setq current-prefix-arg '(4))
+                                                        (org-babel-tangle-jump-to-org)))))))

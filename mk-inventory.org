@@ -3,7 +3,7 @@
 #+EMAIL: abdulwahidc@gmail.com
 #+MACRO: this-file  mk-inventory.org
 #+MACRO: project-name: Big-Data-Stack
-#+PROPERTY: header-args :tangle mk-inventory :comments both
+#+PROPERTY: header-args :tangle mk-inventory :comments both :padline true
 
 * About
 
@@ -12,7 +12,8 @@ changes, make sure to edit {{{this-file}}}, not the tangled
 (generated) file.
 
 To update the code, open {{{this-file}}} in Emacs (with Org-Mode
-installed) and execute =C-c C-v t=.
+installed) and execute =C-c C-v t=.  While reading the tangled file
+you can jump back to the definition =C-u C-c C-v t=.
 
 Note: if you are reading this on GitHub, be aware that the org-mode
 renderer doesn't respect indentation. Thus if the definition of a
