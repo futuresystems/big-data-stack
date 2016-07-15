@@ -104,15 +104,6 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
 1. Ensure `ssh_bastion_config` is to your liking (it assumes you are
    using the openstack cluster on FutureSystems).
 1. Run `ansible all -m ping` to make sure all nodes can be managed.
-1. ~~Define `zookeeper_id` for each zookeeper node. Adapt the following:~~ (**NO LONGER NEEDED as of v0.2.4**)
-
-    ```
-    mkdir host_vars
-    for i in 0 1 2; do
-      echo "zookeeper_id: $(( i+1 ))" > host_vars/master$i
-    done
-    ```
-
 1. Run `ansible-playbook play-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
