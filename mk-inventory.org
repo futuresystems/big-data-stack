@@ -82,10 +82,12 @@ import itertools
 * Logging
 
 We'll use the standard built-in =logging= module with a default level of INFO.
+In order to not dump too much info we'll simplify the output format.
 
 #+BEGIN_SRC python
 import logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    format='%(levelname)-9s %(message)s')
 logger = logging.getLogger(__name__)
 #+END_SRC
 
