@@ -99,6 +99,12 @@ This is a convenient description of this program that will be shown to users.
 _DESCRIPTION = """
 Generate a valid Ansible inventory file and associated host_vars and group_vars.
 You need to provide a name for the virtual cluster, and SSH-able IP addresses.
+
+The inventory will be written to stdout and log messages to stderr.
+
+Example:
+
+  ./mk-inventory -n foo 192.168.1.10{1,2,3,4,5} >inventory.txt
 """
 #+END_SRC
 
