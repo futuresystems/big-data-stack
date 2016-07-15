@@ -246,7 +246,8 @@ class Inventory(object):
         :param prefix: where the ``host_vars`` will be written (default is current directory)
         """
 
-        funcs = [os.path.abspath,
+        funcs = [os.path.relpath,
+                 os.path.abspath,
                  os.path.expanduser,
                  os.path.expandvars]
 
