@@ -142,8 +142,8 @@ We also need to add variables to a node
         """
 
         if key in self._variables:
-            logger.warning('Overwriting previous definition of',
-                           key, '=', self._variables[key])
+            logger.warning('Overwriting previous definition of {} = {}'\
+                           .format(key, self._variables[key]))
 
         self._variables[key] = value
 #+END_SRC
@@ -181,7 +181,7 @@ Any properties of the =Node= should be saves as =host_vars=.
             ansible_ssh_host=self.address
         )
         
-        yaml.dump(d, default_flow_style=True)
+        return yaml.dump(d, default_flow_style=False)
 #+END_SRC
 
 
@@ -228,11 +228,11 @@ class Inventory(object):
         """
 
         s = StringIO()
-        for name, nodes in self._groups:
+        for name, nodes in self._groups.iteritems():
             s.write('[{}]\n'.format(name))
-            for n in node:
+            for n in nodes:
                 s.write('{}\n'.format(n.name))
-                s.write('\n')
+            s.write('\n')
 
         v = s.getvalue()
         s.close()
@@ -250,27 +250,32 @@ class Inventory(object):
                  os.path.expandvars]
 
         real_prefix = reduce(lambda path, f: f(path),
-                             reversed(funcs))
+                             reversed(funcs),
+                             prefix
+                             )
+
 
         host_vars = os.path.join(real_prefix, 'host_vars')
 
-        if os.path.exists(host_vars) and not os.path.isdir(path):
+        if os.path.exists(host_vars) and not os.path.isdir(host_vars):
             msg = '{} exists and is not a directory'.format(host_vars)
             logger.critical(msg)
             raise ValueError(msg)
 
         if not os.path.exists(host_vars):
-            logger.warning('Creating directory', host_vars)
+            logger.warning('Creating directory {}'.format(host_vars))
+            os.makedirs(host_vars)
 
-        logger.info('Writing host_vars to', host_vars)
+        logger.info('Writing host_vars to {}'.format(host_vars))
         for node in self._nodes:
-            path = os.path.join(host_vars, '{}.yml'.format(node.name))
+            path = os.path.join(host_vars, '{}'.format(node.name))
             yml  = node.as_host_vars()
-            logger.info('Writing', path)
-            logger.debug('Writing to', path, yml)
+            logger.info('Writing {}'.format(path))
+            logger.debug('Writing to {} {}'.format(path, yml))
 
             if os.path.exists(path):
-                logger.warning('Overwriting', path)
+                logger.warning('Overwriting {}'.format(path))
+
 
             with open(path, 'w') as fd:
                 fd.write(yml)
@@ -391,6 +396,10 @@ def create_inventory(nodes):
 
     for node in nodes:
         inventory.add_node('datanodes', node)
+    inventory.add_group_to('datanodes', 'hadoopnodes')
+
+
+    return inventory
 #+END_SRC
 
 * Entry Points
@@ -398,9 +407,10 @@ def create_inventory(nodes):
 #+BEGIN_SRC python
 def main():
     opts = get_opts()
-    print opts
     nodes = mk_nodes(opts.name, opts.addresses)
     inventory = create_inventory(nodes)
+    inventory.write_host_vars()
+    print inventory.as_ini()
 
 if __name__ == '__main__':
     main()
