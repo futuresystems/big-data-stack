@@ -107,8 +107,7 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
    especially at `remote_user` if you are not using Ubuntu. You can
    alternatively override the user by passing `-u $NODE_USERNAME` to
    the ansible commands.
-1. Ensure `ssh_bastion_config` is to your liking (it assumes you are
-   using the openstack cluster on FutureSystems).
+1. Ensure `ssh_config` is to your liking.
 1. Run `ansible all -m ping` to make sure all nodes can be managed.
 1. Run `ansible-playbook play-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
