@@ -277,7 +277,7 @@ class Inventory(object):
 #+END_SRC
 
 
-* Creating =Node=\ s
+* Creating =Node= s
 
 Nodes are named in sequential order.
 
