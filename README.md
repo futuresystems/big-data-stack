@@ -13,7 +13,6 @@ directory. A playbook for deploying all the addons is given in
 
 Legend:
   - [X] available
-  - [ ] **_ItaliBold_**: work-in-progress
   - [ ] planned
 
 
@@ -27,7 +26,7 @@ Legend:
 - [ ] [MLbase](http://www.mlbase.org/)
 - [X] [Java](https://www.java.com/en/)
 - [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
-- [ ] [**_Python_**](https://www.python.org/)
+- [ ] [Python](https://www.python.org/)
   * [ ] [Pandas](http://pandas.pydata.org/)
   * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
 - [ ] [Tensorflow](https://www.tensorflow.org/)
@@ -39,14 +38,15 @@ Legend:
 - [X] [Spark](http://spark.apache.org/)
 - [ ] [Tez](https://tez.apache.org/)
 - [ ] [Hama](https://hama.apache.org/)
-- [ ] [**_Storm_**](http://storm.apache.org/)
+- [ ] [Storm](http://storm.apache.org/)
 - [X] [Hive](https://hive.apache.org/)
 - [X] [Pig](https://pig.apache.org/)
-- [ ] [**_Flink_**](https://flink.apache.org/)
+- [ ] [Flink](https://flink.apache.org/)
 
 ## Database Layer
 
-- [ ] [**_MongoDB_**](https://www.mongodb.org/)
+- [X] [Drill](https://drill.apache.org/)
+- [ ] [MongoDB](https://www.mongodb.org/)
 - [ ] [CouchDB](http://couchdb.apache.org/)
 - [X] [HBase](https://hbase.apache.org/)
 - [X] [MySQL](https://www.mysql.com/)

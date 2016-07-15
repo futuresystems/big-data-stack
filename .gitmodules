@@ -49,3 +49,6 @@
 [submodule "roles/hbase_configure"]
 	path = roles/hbase_configure
 	url = git@github.com:futuresystems/ansible-role-hbase_configure.git
+[submodule "roles/drill"]
+	path = roles/drill
+	url = git@github.com:futuresystems/ansible-role-drill.git
