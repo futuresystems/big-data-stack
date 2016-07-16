@@ -189,6 +189,7 @@ Any properties of the =Node= should be saves as =host_vars=.
         d = dict(
             ansible_ssh_host=self.address
         )
+        d.update(self._variables)
         
         return yaml.dump(d, default_flow_style=False)
 #+END_SRC
