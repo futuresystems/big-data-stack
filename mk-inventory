@@ -82,7 +82,7 @@ The inventory will be written to stdout and log messages to stderr.
 
 Example:
 
-  ./mk-inventory -n foo 192.168.1.10{1,2,3,4,5} >inventory.txto
+  ./mk-inventory -n foo 192.168.1.10{1,2,3,4,5} >inventory.txt
 """
 # Getting User Options:1 ends here
 
