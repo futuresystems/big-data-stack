@@ -176,7 +176,7 @@ $ pip install -U -r requirements.txt
 
 See the `examples` directory:
 
-- `nist_finterprint`: fingerprint analysis using Spark with results pushed to HBase
+- `nist_fingerprint`: fingerprint analysis using Spark with results pushed to HBase
 
 
 # License
