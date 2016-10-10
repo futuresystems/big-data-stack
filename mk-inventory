@@ -346,7 +346,7 @@ def create_inventory(nodes):
 
     for i in xrange(_N_ZOOKEEPERS):
         node = inf_nodes.next()
-        node.add_var('zookeeper_id', i)
+        node.add_var('zookeeper_id', i + 1) # need to start with 1
         inventory.add_node('zookeepernodes', node)
 
     for _ in xrange(_N_NAMENODES):
