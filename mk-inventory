@@ -373,6 +373,9 @@ def create_inventory(nodes):
         node = inf_nodes.next()
         inventory.add_node('frontendnodes', node)
 
+    for _ in xrange(_N_MONITORS):
+        node = inf_nodes.next()
+        inventory.add_node('monitornodes', node)
 
     for node in nodes:
         inventory.add_node('datanodes', node)
