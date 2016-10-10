@@ -373,39 +373,45 @@ def create_inventory(nodes):
     """
 
     inventory = Inventory()
-    inf_nodes = itertools.cycle(nodes)
 
+    assert len(nodes) >= _N_ZOOKEEPERS
     for i in xrange(_N_ZOOKEEPERS):
-        node = inf_nodes.next()
+        node = nodes[i]
         node.add_var('zookeeper_id', i + 1) # need to start with 1
         inventory.add_node('zookeepernodes', node)
 
-    for _ in xrange(_N_NAMENODES):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_NAMENODES
+    for i in xrange(_N_NAMENODES):
+        node = nodes[i]
         inventory.add_node('namenodes', node)
     inventory.add_group_to('namenodes', 'hadoopnodes')
 
-    for _ in xrange(_N_JOURNALNODES):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_JOURNALNODES
+    for i in xrange(_N_JOURNALNODES):
+        node = nodes[i]
         inventory.add_node('journalnodes', node)
     inventory.add_group_to('journalnodes', 'hadoopnodes')
 
-    for _ in xrange(_N_HISTORYSERVERS):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_HISTORYSERVERS
+    for i in xrange(_N_HISTORYSERVERS):
+        node = nodes[i]
         inventory.add_node('historyservernodes', node)
     inventory.add_group_to('historyservernodes', 'hadoopnodes')
 
-    for _ in xrange(_N_RESOURCEMANAGERS):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_RESOURCEMANAGERS
+    for i in xrange(_N_RESOURCEMANAGERS):
+        node = nodes[i]
         inventory.add_node('resourcemanagernodes', node)
     inventory.add_group_to('resourcemanagernodes', 'hadoopnodes')
 
-    for _ in xrange(_N_FRONTENDS):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_FRONTENDS
+    for i in xrange(_N_FRONTENDS):
+        node = nodes[i]
         inventory.add_node('frontendnodes', node)
 
-    for _ in xrange(_N_MONITORS):
-        node = inf_nodes.next()
+    assert len(nodes) >= _N_MONITORS
+    for i in xrange(_N_MONITORS):
+        node = nodes[i]
         inventory.add_node('monitornodes', node)
 
     for node in nodes:
