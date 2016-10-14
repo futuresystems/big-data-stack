@@ -189,7 +189,7 @@ class Node(object):
 class Inventory(object):
 
     def __init__(self, groups=None):
-        self._groups = groups or defaultdict(set)
+        self._groups = groups or defaultdict(list)
         self._nodes = set()
 
 
@@ -202,7 +202,9 @@ class Inventory(object):
         :param node: :class:`Node`
         """
 
-        self._groups[group].add(node)
+        if node not in self._groups[group]:
+            self._groups[group].append(node)
+
         self._nodes.add(node)
 
 
