@@ -1,0 +1,21 @@
+---
+
+hive_version: 1.2.1
+hive_install_dest: /opt
+hadoop_user: hadoop
+hadoop_group: hadoop
+_hive_bin_sha256:
+  1.2.1: 29d9780c4af887ef623bafe6a73ec6f1bea9759bbe31fb4aeeb5b0f68c4c9979
+HIVE_HOME: "{{ hive_install_dest }}/hive"
+hive_conf: "{{ HIVE_HOME }}/conf"
+hive_lib: "{{ HIVE_HOME }}/lib"
+
+#HIVE_METASTORE: mysql
+
+HIVE_MYSQL_METASTORE:
+  user: hive
+  password: hive
+  host: 127.0.0.1   
+  port: 3306
+  dbname: hive_metastore
+hive_schema: "{{ HIVE_HOME }}/scripts/metastore/upgrade/mysql/hive-schema-0.9.0.mysql.sql"

@@ -1,0 +1,8 @@
+---
+
+- name: Apache Drill
+  hosts: hadoopnodes
+  become: yes
+  roles:
+    - role: java
+    - role: drill

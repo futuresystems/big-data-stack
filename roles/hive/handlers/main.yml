@@ -1,0 +1,10 @@
+---
+
+- name: create initial schema
+
+  mysql_db:
+     name: "{{ HIVE_MYSQL_METASTORE.dbname }}"
+     state: import
+     login_user: "{{ mysql_root_user }}" 
+     login_password: "{{ mysql_root_pass }}"
+     target: "{{ hive_schema }}"

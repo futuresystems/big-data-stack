@@ -1,0 +1,22 @@
+---
+
+ - name: Create MySQL Metastore database
+   mysql_db: 
+      name: "{{ HIVE_MYSQL_METASTORE.dbname }}" 
+      collation: "{{ HIVE_MYSQL_METASTORE.db_collation | default('utf8_general_ci') }}" 
+      encoding: "{{ HIVE_MYSQL_METASTORE.db_encoding | default('utf8') }}" 
+      state: present 
+   notify: create initial schema
+
+ - name: Create hive user
+   mysql_user:  
+     name: "{{ HIVE_MYSQL_METASTORE.user }}"
+     host: "{{ item }}"
+     password: "{{ HIVE_MYSQL_METASTORE.password }}" 
+     priv:  "{{ HIVE_MYSQL_METASTORE.priv | default('*.*:ALL') }}"
+     state: present 
+   with_items: 
+     - localhost 
+     - "{{ ansible_hostname }}" 
+     - 127.0.0.1
+

@@ -3,3 +3,4 @@
 keys
 inventory.txt
 host_vars
+*.retry

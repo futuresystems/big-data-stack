@@ -99,7 +99,9 @@
 - name: zookeeper
   hosts: zookeepernodes
   become: yes
+  tags: zookeeper
   roles:
+    - role: java
     - role: zookeeper
       zookeeper_node_iface: ansible_eth0
       zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
@@ -108,7 +110,7 @@
       supervisord_programs:
         zookeeper:
           user: zookeeper
-          command: /usr/share/zookeeper/bin/zkServer.sh start-foreground
+          command: bash -lc "/opt/zookeeper/bin/zkServer.sh start-foreground"
           stdout_logfile: /var/log/zookeeper/stdout.log
           stderr_logfile: /var/log/zookeeper/stderr.log
 

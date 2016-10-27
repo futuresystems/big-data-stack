@@ -13,7 +13,6 @@ directory. A playbook for deploying all the addons is given in
 
 Legend:
   - [X] available
-  - [ ] **_ItalicBold_**: work-in-progress
   - [ ] planned
 
 
@@ -27,9 +26,10 @@ Legend:
 - [ ] [MLbase](http://www.mlbase.org/)
 - [X] [Java](https://www.java.com/en/)
 - [ ] [R+libraries](https://cran.r-project.org/web/packages/available_packages_by_date.html)
-- [ ] [**_Python_**](https://www.python.org/)
+- [ ] [Python](https://www.python.org/)
   * [ ] [Pandas](http://pandas.pydata.org/)
   * [ ] [Scikit-learn](http://scikit-learn.org/stable/)
+- [ ] [Tensorflow](https://www.tensorflow.org/)
 
 
 ## Data Processing Layer
@@ -38,17 +38,18 @@ Legend:
 - [X] [Spark](http://spark.apache.org/)
 - [ ] [Tez](https://tez.apache.org/)
 - [ ] [Hama](https://hama.apache.org/)
-- [ ] [**_Storm_**](http://storm.apache.org/)
-- [ ] [Hive](https://hive.apache.org/)
+- [ ] [Storm](http://storm.apache.org/)
+- [X] [Hive](https://hive.apache.org/)
 - [X] [Pig](https://pig.apache.org/)
-- [ ] [**_Flink_**](https://flink.apache.org/)
+- [ ] [Flink](https://flink.apache.org/)
 
 ## Database Layer
 
-- [ ] [**_MongoDB_**](https://www.mongodb.org/)
+- [X] [Drill](https://drill.apache.org/)
+- [ ] [MongoDB](https://www.mongodb.org/)
 - [ ] [CouchDB](http://couchdb.apache.org/)
 - [X] [HBase](https://hbase.apache.org/)
-- [ ] [**_MySQL_**](https://www.mysql.com/)
+- [X] [MySQL](https://www.mysql.com/)
 - [ ] [PostgreSQL](https://www.mysql.com/)
 - [ ] [Memcached](http://memcached.org/)
 - [ ] [Redis](http://redis.io/)
@@ -89,7 +90,7 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
    ```
 
 
-1. Make sure your public key is added to [github.com](https://github.com/settings/keys)
+1. Make sure your public key is added to [github.com](https://github.com/settings/keys) **IMPORTANT** check the fingerprint `ssh-keygen -lf ~/.ssh/id_rsa` and make sure it is in your [list of keys](https://github.com/settings/keys)!
 1. Download this repository using `git clone --recursive`. **IMPORTANT**: make sure you specify the `--recursive` option otherwise you will get errors.
 
      ```
@@ -97,34 +98,22 @@ We've also noticied that if you are running on `india`, Ansible may be unable to
      ```
      
 1. Install the requirements using `pip install -r requirements.txt`
-1. Edit `.cluster.py` to define the machines in the cluster.
-
-
-     E.g. on Chameleon cloud, the following changes should be made:
-     ```
-     -	‘image’: CC-Ubuntu14.04
-     -	‘create_floating_ip’: True
-     ```
-
-1. Launch the cluster using `vcl boot -p openstack -P $USER-` This
-   will start the machines on whatever openstack environment is
-   currently available (via the `$OS_PROJECT_NAME`, `$OS_AUTH_URL`,
-   etc), prefixing `$USER-` to the name of each VM (eg. `zk0` becomes
-   `badi-zk0`).
+1. Launch a virtual cluster and obtain the SSH-able IP addresses
+1. Generate the inventory and variable files using `./mk-inventory`
+   For example:
+   
+   ```
+   ./mk-inventory -n $USER-mycluster 192.168.10{1,2,3,4} >inventory.txt
+   ```
+   
+   Will define the inventory for a four-node cluster which nodes names
+   as `$USER-myclusterN` (with `N` from `0..3`)
 1. Make sure that `ansible.cfg` reflects your environment. Look
-   especially at `remote_user` if you are not using Ubuntu.
-1. Ensure `ssh_bastion_config` is to your liking (it assumes you are
-   using the openstack cluster on FutureSystems).
+   especially at `remote_user` if you are not using Ubuntu. You can
+   alternatively override the user by passing `-u $NODE_USERNAME` to
+   the ansible commands.
+1. Ensure `ssh_config` is to your liking.
 1. Run `ansible all -m ping` to make sure all nodes can be managed.
-1. ~~Define `zookeeper_id` for each zookeeper node. Adapt the following:~~ (**NO LONGER NEEDED as of v0.2.4**)
-
-    ```
-    mkdir host_vars
-    for i in 0 1 2; do
-      echo "zookeeper_id: $(( i+1 ))" > host_vars/master$i
-    done
-    ```
-
 1. Run `ansible-playbook play-hadoop.yml` to install the base system
 1. Run `ansible-playbook addons/{pig,spark}.yml # etc` to install the
    Pig and Spark addons.
@@ -141,24 +130,6 @@ $ ansible-playbook -f $(egrep '^[a-zA-Z]' inventory.txt | sort | uniq | wc -l) #
 
 The `hadoop` user is present on all the nodes and is the hadoop administrator.
 If you need to change anything on HDFS, it must be done as `hadoop`.
-
-
-# Access
-
-`vcl ssh` can be used as shorthand to access the nodes.
-It looks up the ip address in the generated .machines.yml, using the floating ip if available.
-
-# Monitoring
-
-You can access the Ganglia display on the monitoring node.
-The interface is kept local to the virtual cluster so you need log in with X forwarding enable and install a browser.
-For example:
-
-```
-[badi@india]: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@123.45.67.89 -X
-[ubuntu@master2]: sudo apt-get -y install firefox
-[ubuntu@master2]: firefox http://localhost/ganglia
-```
 
 
 # Upgrading
@@ -189,15 +160,3 @@ Please see the `LICENSE` file in the root directory of the repository.
 1. Fork the repository
 1. Add yourself to the `CONTRIBUTORS.yml` file
 1. Submit a pull request to the `unstable` branch
-
-
-<!-- # Stack Components -->
-
-<!-- This is a list of the components with the associated information: -->
-<!-- - description of purpose -->
-<!-- - summary of general usage -->
-<!-- - references (with links) to any scientific publications by the authors -->
-<!-- - official documentation -->
-<!-- - links to third party tutorials and demonstrations -->
-
-<!-- The name of the technology should link to the project webpage -->
