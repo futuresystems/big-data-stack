@@ -1,5 +1,4 @@
 ---
 
 - include: base/00-common.yml
-- include: base/01-monitor.yml
 - include: base/02-hadoop.yml
