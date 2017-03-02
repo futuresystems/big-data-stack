@@ -96,25 +96,6 @@
       tags: storage
 
 
-- name: zookeeper
-  hosts: zookeepernodes
-  become: yes
-  tags: zookeeper
-  roles:
-    - role: java
-    - role: zookeeper
-      zookeeper_node_iface: ansible_eth0
-      zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
-
-    - role: supervisord
-      supervisord_programs:
-        zookeeper:
-          user: zookeeper
-          command: bash -lc "/opt/zookeeper/bin/zkServer.sh start-foreground"
-          stdout_logfile: /var/log/zookeeper/stdout.log
-          stderr_logfile: /var/log/zookeeper/stderr.log
-
-
 - name: hadoop common
   hosts: hadoopnodes
   become: yes
@@ -149,10 +130,8 @@
         - yarn-site.xml
         - mapred-site.xml
 
-
       core_site:
-        fs.defaultFS:
-          hdfs://futuresystems
+        fs.defaultFS: "hdfs://{{ hostvars[groups['namenodes'][0]].ansible_hostname }}"
 
       mapred_site:
         mapreduce.framework.name: yarn
@@ -163,15 +142,9 @@
         yarn.acl.enable: "true"
         yarn.log-aggregation-enable: "true"
 
-        yarn.resourcemanager.ha.enabled: "true"
         yarn.resourcemanager.cluster-id: "cluster1"
-        yarn.resourcemanager.ha.rm-ids: "rm1,rm2"
-        yarn.resourcemanager.hostname.rm1:
+        yarn.resourcemanager.hostname:
           "{{ hostvars[groups['resourcemanagernodes'][0]].ansible_hostname }}"
-        yarn.resourcemanager.hostname.rm2:
-          "{{ hostvars[groups['resourcemanagernodes'][1]].ansible_hostname }}"
-        yarn.resourcemanager.zk-address:
-          "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
 
         yarn.nodemanager.aux-services: mapreduce_shuffle
         yarn.nodemanager.aux-services.mapreduce_shuffle.class:
@@ -184,53 +157,12 @@
         dfs.permissions.superusergroup: hadoop,hadoopadmin
         dfs.namenode.datanode.registration.ip-hostname-check: "false"
 
-        # HA
-        dfs.nameservices: futuresystems
-
-        dfs.ha.namenodes.futuresystems: nn1,nn2
-        dfs.namenode.rpc-address.futuresystems.nn1:
+        dfs.namenode.rpc-address:
           "{{ hostvars[groups['namenodes'][0]][hadoop_iface].ipv4.address }}:8020"
-        dfs.namenode.rpc-address.futuresystems.nn2:
-          "{{ hostvars[groups['namenodes'][1]][hadoop_iface].ipv4.address }}:8020"
-
-        dfs.namenode.http-address.futuresystems.nn1:
+        dfs.namenode.http-address:
           "{{ hostvars[groups['namenodes'][0]][hadoop_iface].ipv4.address }}:50070"
-        dfs.namenode.http-address.futuresystems.nn2:
-          "{{ hostvars[groups['namenodes'][1]][hadoop_iface].ipv4.address }}:50070"
 
-        dfs.namenode.shared.edits.dir:
-          "\
-          qjournal://\
-          {{ hostvars[groups['journalnodes'][0]][hadoop_iface].ipv4.address }}:8485;\
-          {{ hostvars[groups['journalnodes'][1]][hadoop_iface].ipv4.address }}:8485;\
-          {{ hostvars[groups['journalnodes'][2]][hadoop_iface].ipv4.address }}:8485\
-          /futuresystems\
-          "
-
-        dfs.client.failover.proxy.provider.futuresystems:
-          "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
-
-        dfs.ha.fencing.methods: sshfence
-        dfs.ha.fencing.ssh.private-key-files:
-          "{{ ansible_env.HOME }}/.ssh/id_rsa"
-
-        dfs.ha.automatic-failover.enabled: "true"
-
-        # using `hostvars[groups['zookeepernodes']] does not work
-        # as the `zkN` nodes are not visible using that approach
-        ha.zookeeper.quorum: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
-
-        # journalnodes
-        dfs.journalnode.edits.dir:
-          /hdfs/journalnode
-
-        # datanodes
         dfs.datanode.data.dir: file:///hdfs/datanode
-
-
-      # mapred_site:
-      #   mapred.job.tracker: master1.local:9001
-      #   mapreduce.jobtracker.restart.recover: 'true'
 
 
 - name: stop everything
@@ -261,49 +193,13 @@
           stdout_logfile: /hdfs/journalnode-stdout.log
           stderr_logfile: /hdfs/journalnode-stderr.log
 
-
-- name: start zookeeper
-  hosts: zookeepernodes
-  become: yes
-  tags:
-    - start_zookeeper
-  tasks:
-    - name: start
-      supervisorctl:
-        name: zookeeper
-        state: started
-
-
-- name: initialize namenodes 1
+- name: initialize namenode
   hosts: namenodes[0]
   user: hadoop
   tasks:
 
     - name: namenode format
       shell: sh -lc 'hdfs namenode -format -force'
-      tags: first_run
-
-    - name: initialize shared edits
-      shell: sh -lc 'hdfs namenode -initializeSharedEdits -force'
-      tags: first_run
-
-    - name: format zookeeper
-      shell: sh -lc 'hdfs zkfc -formatZK -force'
-      tags: first_run
-
-    - name: run for nn2
-      shell: sh -lc 'hdfs namenode'
-      async: 100
-      poll: 0
-      tags: first_run
-
-
-- name: initialize namenodes 2
-  hosts: namenodes[1]
-  user: hadoop
-  tasks:
-    - name: bootstrap standby node
-      shell: sh -lc 'hdfs namenode -bootstrapStandby -force'
       tags: first_run
 
 
@@ -328,13 +224,6 @@
           user: hadoop
           stdout_logfile: /hdfs/namenode-stdout.log
           stderr_logfile: /hdfs/namenode-stderr.log
-
-        zkfc:
-          command: sh -lc 'hdfs zkfc'
-          user: hadoop
-          stdout_logfile: /hdfs/zkfc-stdout.log
-          stderr_logfile: /hdfs/zkfc-stderr.log
-
 
 - name: resourcemanagers
   hosts: resourcemanagernodes
