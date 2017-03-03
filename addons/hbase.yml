@@ -1,5 +1,15 @@
 ---
 
+- name: Install Zookeeper
+  become: yes
+  hosts: zookeepernodes
+  tags: zookeeper
+  roles:
+    - role: zookeeper
+      zookeeper_node_iface: ansible_eth0
+      zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
+
+
 - name: Deploy HBase
   become: yes
   hosts: hadoopnodes
@@ -14,7 +24,7 @@
       hbase_site:
         hbase.cluster.distributed: "true"
         hbase.zookeeper.quorum: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
-        hbase.rootdir: "hdfs://futuresystems/hbase"
+        hbase.rootdir: "hdfs://{{ hostvars[groups['namenodes'][0]].ansible_hostname }}/hbase"
 
 
 - name: Start RegionServer instances
