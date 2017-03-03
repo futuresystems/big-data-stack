@@ -1,79 +1,16 @@
-# Imports
+#!/usr/bin/env python
 
-# We are using the =argparse= module that comes with Python.  While
-# others argument parsing libraries exists such as =docopts=, =argparse=
-# is easy to use and (importantly) adds to extra dependencies.
-
-
-# [[file:mk-inventory.org::*Imports][Imports:1]]
 import argparse
-# Imports:1 ends here
-
-
-
-# We also need the =defaultdict= from the =collections= module.
-
-# [[file:mk-inventory.org::*Imports][Imports:2]]
 from collections import defaultdict
-# Imports:2 ends here
-
-
-
-# We'll also be generating some strings so we'll use =StringIO= to do so effeciently.
-
-
-# [[file:mk-inventory.org::*Imports][Imports:3]]
 from StringIO import StringIO
-# Imports:3 ends here
-
-
-
-# We'll also need to be reading and writing yaml files, so we should import:
-
-
-# [[file:mk-inventory.org::*Imports][Imports:4]]
 import yaml
-# Imports:4 ends here
-
-
-
-# We also will be interfacing with the operating system and dealing with
-# file paths, so we need these modules
-
-
-# [[file:mk-inventory.org::*Imports][Imports:5]]
 import os
 import os.path
-# Imports:5 ends here
-
-
-
-# We will be using =itertools= (namely =cycle=) when assigning nodes to groups
-
-
-# [[file:mk-inventory.org::*Imports][Imports:6]]
 import itertools
-# Imports:6 ends here
-
-# Logging
-
-# We'll use the standard built-in =logging= module with a default level of INFO.
-# In order to not dump too much info we'll simplify the output format.
-
-
-# [[file:mk-inventory.org::*Logging][Logging:1]]
 import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(levelname)-9s %(message)s')
 logger = logging.getLogger(__name__)
-# Logging:1 ends here
-
-# Getting User Options
-
-# This is a convenient description of this program that will be shown to users.
-
-
-# [[file:mk-inventory.org::*Getting%20User%20Options][Getting User Options:1]]
 _DESCRIPTION = """
 Generate a valid Ansible inventory file and associated host_vars and group_vars.
 You need to provide a name for the virtual cluster, and SSH-able IP addresses.
@@ -84,9 +21,7 @@ Example:
 
   ./mk-inventory -n foo 192.168.1.10{1,2,3,4,5} >inventory.txt
 """
-# Getting User Options:1 ends here
 
-# [[file:mk-inventory.org::*Getting%20User%20Options][Getting User Options:2]]
 def get_opts():
     p = argparse.ArgumentParser(
         description=_DESCRIPTION,
@@ -97,29 +32,14 @@ def get_opts():
                    help='IP addresses of the cluster')
 
     return p.parse_args()
-# Getting User Options:2 ends here
 
-# Node
-
-# The =Node= represents everything that is known about a node: namely, name and IP address
-
-
-# [[file:mk-inventory.org::*Node][Node:1]]
 class Node(object):
 
     def __init__(self, name, address):
         self._name = name
         self._address = address
         self._variables = dict()
-# Node:1 ends here
 
-
-
-
-# We also need to add variables to a node
-
-
-# [[file:mk-inventory.org::*Node][Node:2]]
     def add_var(self, key, value):
         """Add a variable and value to a node. This will show up in the host_vars file
 
@@ -134,15 +54,7 @@ class Node(object):
                            .format(key, self._variables[key]))
 
         self._variables[key] = value
-# Node:2 ends here
 
-
-
-
-# Since a =Node= is immutable we provide properties to access it attributes.
-
-
-# [[file:mk-inventory.org::*Node][Node:3]]
     @property
     def name(self):
         """The name of this node
@@ -150,21 +62,13 @@ class Node(object):
         """
         return self._name
 
-
     @property
     def address(self):
         """The IP address of this node
         :rtype: :class:`str`
         """
         return self._address
-# Node:3 ends here
 
-
-
-# Any properties of the =Node= should be saves as =host_vars=.
-
-
-# [[file:mk-inventory.org::*Node][Node:4]]
     def as_host_vars(self):
         """generate the ``host_vars`` representation of this node
 
@@ -177,15 +81,8 @@ class Node(object):
         d.update(self._variables)
         
         return yaml.dump(d, default_flow_style=False)
-# Node:4 ends here
-
-# Inventory
-
-# The =Inventory= class trackes all the components of an inventory file:
-# namely the name of a group and the nodes associated to a group.
 
 
-# [[file:mk-inventory.org::*Inventory][Inventory:1]]
 class Inventory(object):
 
     def __init__(self, groups=None):
@@ -276,14 +173,8 @@ class Inventory(object):
 
             with open(path, 'w') as fd:
                 fd.write(yml)
-# Inventory:1 ends here
-
-# Creating =Node= s
-
-# Nodes are named in sequential order.
 
 
-# [[file:mk-inventory.org::*Creating%20=Node=%20s][Creating =Node= s:1]]
 def mk_nodes(vcname, addresses):
     """Creates the :class:`Node`s
 
@@ -302,38 +193,46 @@ def mk_nodes(vcname, addresses):
         nodes.append(n)
 
     return nodes
-# Creating =Node= s:1 ends here
 
-# Requirements
 
+
+# There are several important groups used
+#
+# - zookeeper: the zookeeper nodes
+# - namenodes: the nodes on which the HDFS namenodes (primary and backup) run
+# - journalnodes: the nodes on which the HDFS journalnodes run
+# - historyservers: the nodes on which the history server runs
+# - resourcemanagers: the nodes on which the YARN resourcemanagers run
+# - datanodes: the nodes which are used as compute nodes
+# - frontends: nodes on which users should log into
+# - hadoopnodes: a metagroup consisting of all nodes running hadoop, yarn, or other analytics software
+# - monitor: the nodes on which the  monitoring software (eg Ganglia) is installed
+#
+#
 # There are currently requirements on the number of nodes in each group.
 # Additionally, as parameterizing these assignments is not currently
 # supported, we'll just hardcode them here.
-
+#
 # The one that is intended to scale dynamically right now is the number
 # of compute nodes, so you'll notice the absence of =_N_DATANODES= below.
 
-
-# [[file:mk-inventory.org::*Requirements][Requirements:1]]
-_N_ZOOKEEPERS = 3
-_N_NAMENODES = 2
-_N_JOURNALNODES = 3
+_N_ZOOKEEPERS = 1
+_N_NAMENODES = 1
+_N_JOURNALNODES = 1
 _N_HISTORYSERVERS = 1
-_N_RESOURCEMANAGERS = 2
+_N_RESOURCEMANAGERS = 1
 _N_FRONTENDS = 1
 _N_MONITORS = 1
-# Requirements:1 ends here
+
 
 # Creating the Inventory
-
+#
 # Since the nodes is the virtual cluster are assumed to be identical the
 # partitioning is arbitrary. We choose to iterate over the available nodes
 # assigning each to the required group in a semi-round-robin fashion.
 
 
 
-
-# [[file:mk-inventory.org::*Creating%20the%20Inventory][Creating the Inventory:1]]
 def create_inventory(nodes):
     """Assign the nodes to various groups and return the inventory
 
@@ -391,12 +290,8 @@ def create_inventory(nodes):
 
 
     return inventory
-# Creating the Inventory:1 ends here
-
-# Entry Points
 
 
-# [[file:mk-inventory.org::*Entry%20Points][Entry Points:1]]
 def main():
     opts = get_opts()
     nodes = mk_nodes(opts.name, opts.addresses)
@@ -406,4 +301,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-# Entry Points:1 ends here
