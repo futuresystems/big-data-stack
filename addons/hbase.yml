@@ -1,15 +1,5 @@
 ---
 
-- name: Install Zookeeper
-  become: yes
-  hosts: zookeepernodes
-  tags: zookeeper
-  roles:
-    - role: zookeeper
-      zookeeper_node_iface: ansible_eth0
-      zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
-
-
 - name: Deploy HBase
   become: yes
   hosts: hadoopnodes

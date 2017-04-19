@@ -56,6 +56,7 @@ Legend:
 
 ## Scheduling
 
+  * [X] [Zookeeper](http://zookeeper.apache.org/)
   * [X] [YARN](https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/FairScheduler.html)
   * [ ] [Mesos](http://mesos.apache.org/)
 
