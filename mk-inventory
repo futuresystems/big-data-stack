@@ -195,6 +195,14 @@ def mk_nodes(vcname, addresses):
     return nodes
 
 
+
+def quorum_size(n):
+    if n >= 3:
+        return 3
+    else:
+        return 1
+
+
 def create_inventory(nodes,
                      n_zookeepers=None,
                      n_namenodes=None,
@@ -223,7 +231,7 @@ def create_inventory(nodes,
 
     Defaults:
 
-    - n_zookeepers       = 1
+    - n_zookeepers       = quorum_size( len(nodes) )
     - n_namenodes        = 1
     - n_journalnodes     = 1
     - n_historyservers   = 1
@@ -237,7 +245,7 @@ def create_inventory(nodes,
     :rtype: :class:`Inventory`
     """
 
-    n_zookeepers       = n_zookeepers or 1
+    n_zookeepers       = n_zookeepers or quorum_size(len(nodes))
     n_namenodes        = n_namenodes or 1
     n_journalnodes     = n_journalnodes or 1
     n_historyservers   = n_historyservers or 1
