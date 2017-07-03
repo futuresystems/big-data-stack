@@ -6,6 +6,5 @@
   hosts: hadoopnodes
   become: yes
   roles:
-    - role: java
     - role: drill
       drill_zookeeper_url: "{{ groups['zookeepernodes'] | join(':2181,') ~ ':2181' }}"
