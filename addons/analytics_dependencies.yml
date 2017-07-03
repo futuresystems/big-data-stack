@@ -13,7 +13,7 @@
       - liblapack-pic
       - liblapack3
       - liblapack-test
-      - liblapack3gf
+      # - liblapack3gf  # needed for ubuntu 14.04
       - liblapacke
 
       # blas
@@ -21,7 +21,7 @@
       - libblas-doc
       - libblas-test
       - libblas3
-      - libblas3gf
+      # - libblas3gf  # needed for ubuntu 14.04
 
     packages_redhat:
       # lapack, lapacke
