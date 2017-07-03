@@ -3,7 +3,7 @@
  
  - name: download hive 
    get_url: 
-     url: "https://www.us.apache.org/dist/hive/stable/apache-hive-{{ hive_version }}-bin.tar.gz" 
+     url: "https://www.us.apache.org/dist/hive/hive-{{ hive_version }}/apache-hive-{{ hive_version }}-bin.tar.gz" 
      dest: "{{ ansible_env.PWD }}/apache-hive-{{ hive_version }}-bin.tar.gz" 
      sha256sum: "{{ _hive_bin_sha256[hive_version] }}" 
      validate_certs: no 
