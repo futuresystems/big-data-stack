@@ -6,7 +6,7 @@
   tags: zookeeper
   roles:
     - role: zookeeper
-      zookeeper_node_iface: "{{ bds_internal_iface }}"
+      zookeeper_node_iface: "ansible_{{ bds_internal_iface }}"
       zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
 
     - name: Register with supervisor daemon
