@@ -1,3 +1,4 @@
 ---
   HIVE_METASTORE: mysql
+  bds_internal_iface: eth0
 
