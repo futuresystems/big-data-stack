@@ -72,7 +72,7 @@ Legend:
 
 - git
 - GitHub account with uploaded SSH keys (due to use of submodules)
-- Python, pip, virtualenv
+- Python, pip, virtualenv, libffi-dev, pkg-config
 - Nodes accessible by SSH to admin-privileged account
 
 # Quickstart
