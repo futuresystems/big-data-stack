@@ -196,45 +196,48 @@ def mk_nodes(vcname, addresses):
 
 
 
-# There are several important groups used
-#
-# - zookeeper: the zookeeper nodes
-# - namenodes: the nodes on which the HDFS namenodes (primary and backup) run
-# - journalnodes: the nodes on which the HDFS journalnodes run
-# - historyservers: the nodes on which the history server runs
-# - resourcemanagers: the nodes on which the YARN resourcemanagers run
-# - datanodes: the nodes which are used as compute nodes
-# - frontends: nodes on which users should log into
-# - hadoopnodes: a metagroup consisting of all nodes running hadoop, yarn, or other analytics software
-# - monitor: the nodes on which the  monitoring software (eg Ganglia) is installed
-#
-#
-# There are currently requirements on the number of nodes in each group.
-# Additionally, as parameterizing these assignments is not currently
-# supported, we'll just hardcode them here.
-#
-# The one that is intended to scale dynamically right now is the number
-# of compute nodes, so you'll notice the absence of =_N_DATANODES= below.
-
-_N_ZOOKEEPERS = 1
-_N_NAMENODES = 1
-_N_JOURNALNODES = 1
-_N_HISTORYSERVERS = 1
-_N_RESOURCEMANAGERS = 1
-_N_FRONTENDS = 1
-_N_MONITORS = 1
+def quorum_size(n):
+    if n >= 3:
+        return 3
+    else:
+        return 1
 
 
-# Creating the Inventory
-#
-# Since the nodes is the virtual cluster are assumed to be identical the
-# partitioning is arbitrary. We choose to iterate over the available nodes
-# assigning each to the required group in a semi-round-robin fashion.
-
-
-
-def create_inventory(nodes):
+def create_inventory(nodes,
+                     n_zookeepers=None,
+                     n_namenodes=None,
+                     n_journalnodes=None,
+                     n_historyservers=None,
+                     n_resourcemanagers=None,
+                     n_frontends=None,
+                     n_monitors=None):
     """Assign the nodes to various groups and return the inventory
+
+    Since the nodes is the virtual cluster are assumed to be identical the
+    partitioning is arbitrary. We choose to iterate over the available nodes
+    assigning each to the required group in a semi-round-robin fashion.
+
+    There are several important groups used
+
+    - zookeeper: the zookeeper nodes
+    - namenodes: the nodes on which the HDFS namenodes (primary and backup) run
+    - journalnodes: the nodes on which the HDFS journalnodes run
+    - historyservers: the nodes on which the history server runs
+    - resourcemanagers: the nodes on which the YARN resourcemanagers run
+    - datanodes: the nodes which are used as compute nodes
+    - frontends: nodes on which users should log into
+    - hadoopnodes: a metagroup consisting of all nodes running hadoop, yarn, or other analytics software
+    - monitor: the nodes on which the  monitoring software (eg Ganglia) is installed
+
+    Defaults:
+
+    - n_zookeepers       = quorum_size( len(nodes) )
+    - n_namenodes        = 1
+    - n_journalnodes     = 1
+    - n_historyservers   = 1
+    - n_resourcemanagers = 1
+    - n_frontends        = 1
+    - n_monitors         = 1
 
     :param nodes: the nodes
     :type nodes: :class:`list` of :class:`Node`
@@ -242,45 +245,55 @@ def create_inventory(nodes):
     :rtype: :class:`Inventory`
     """
 
+    n_zookeepers       = n_zookeepers or quorum_size(len(nodes))
+    n_namenodes        = n_namenodes or 1
+    n_journalnodes     = n_journalnodes or 1
+    n_historyservers   = n_historyservers or 1
+    n_resourcemanagers = n_resourcemanagers or 1
+    n_frontends        = n_frontends or 1
+    n_monitors         = n_monitors or 1
+
+
+
     inventory = Inventory()
 
-    assert len(nodes) >= _N_ZOOKEEPERS
-    for i in xrange(_N_ZOOKEEPERS):
+    assert len(nodes) >= n_zookeepers
+    for i in xrange(n_zookeepers):
         node = nodes[i]
         node.add_var('zookeeper_id', i + 1) # need to start with 1
         inventory.add_node('zookeepernodes', node)
 
-    assert len(nodes) >= _N_NAMENODES
-    for i in xrange(_N_NAMENODES):
+    assert len(nodes) >= n_namenodes
+    for i in xrange(n_namenodes):
         node = nodes[i]
         inventory.add_node('namenodes', node)
     inventory.add_group_to('namenodes', 'hadoopnodes')
 
-    assert len(nodes) >= _N_JOURNALNODES
-    for i in xrange(_N_JOURNALNODES):
+    assert len(nodes) >= n_journalnodes
+    for i in xrange(n_journalnodes):
         node = nodes[i]
         inventory.add_node('journalnodes', node)
     inventory.add_group_to('journalnodes', 'hadoopnodes')
 
-    assert len(nodes) >= _N_HISTORYSERVERS
-    for i in xrange(_N_HISTORYSERVERS):
+    assert len(nodes) >= n_historyservers
+    for i in xrange(n_historyservers):
         node = nodes[i]
         inventory.add_node('historyservernodes', node)
     inventory.add_group_to('historyservernodes', 'hadoopnodes')
 
-    assert len(nodes) >= _N_RESOURCEMANAGERS
-    for i in xrange(_N_RESOURCEMANAGERS):
+    assert len(nodes) >= n_resourcemanagers
+    for i in xrange(n_resourcemanagers):
         node = nodes[i]
         inventory.add_node('resourcemanagernodes', node)
     inventory.add_group_to('resourcemanagernodes', 'hadoopnodes')
 
-    assert len(nodes) >= _N_FRONTENDS
-    for i in xrange(_N_FRONTENDS):
+    assert len(nodes) >= n_frontends
+    for i in xrange(n_frontends):
         node = nodes[i]
         inventory.add_node('frontendnodes', node)
 
-    assert len(nodes) >= _N_MONITORS
-    for i in xrange(_N_MONITORS):
+    assert len(nodes) >= n_monitors
+    for i in xrange(n_monitors):
         node = nodes[i]
         inventory.add_node('monitornodes', node)
 

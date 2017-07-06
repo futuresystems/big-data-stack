@@ -9,4 +9,4 @@
     - role: spark
       spark_version: 1.6.0
       spark_package_type: bin
-
+      spark_internal_iface: "{{ bds_internal_iface }}"

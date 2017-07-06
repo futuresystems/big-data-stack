@@ -5,3 +5,4 @@ inventory.txt
 host_vars
 *.retry
 .venv
+venv

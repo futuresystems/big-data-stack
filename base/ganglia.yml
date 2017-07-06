@@ -13,5 +13,5 @@
   roles:
     - role: ganglia_mond
       ganglia_udp_send_channels:
-        - host: "{{ hostvars[groups['monitornodes'][0]].ansible_eth0.ipv4.address }}"
+        - host: "{{ hostvars[groups['monitornodes'][0]]["ansible_" + bds_internal_iface].ipv4.address }}"
           port: "{{ ganglia_defaults_gmon_port }}"

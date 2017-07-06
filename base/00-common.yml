@@ -8,6 +8,7 @@
 
     - role: common
 
+      iface_internal: "{{ bds_internal_iface }}"
       use_ansible_inventory_hostname: true
       generate_hosts_file: true
 

@@ -1,11 +1,12 @@
 ---
 
-hive_version: 1.2.1
+hive_version: 1.2.2
 hive_install_dest: /opt
 hadoop_user: hadoop
 hadoop_group: hadoop
 _hive_bin_sha256:
   1.2.1: 29d9780c4af887ef623bafe6a73ec6f1bea9759bbe31fb4aeeb5b0f68c4c9979
+  1.2.2: 763b246a1a1ceeb815493d1e5e1d71836b0c5b9be1c4cd9c8d685565113771d1
 HIVE_HOME: "{{ hive_install_dest }}/hive"
 hive_conf: "{{ HIVE_HOME }}/conf"
 hive_lib: "{{ HIVE_HOME }}/lib"

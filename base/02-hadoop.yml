@@ -122,7 +122,7 @@
 
       hadoop_cfg_path: /opt/hadoop/etc/hadoop
 
-      hadoop_iface: ansible_eth0
+      hadoop_iface: "ansible_{{ bds_internal_iface }}"
 
       clear_configs:
         - core-site.xml

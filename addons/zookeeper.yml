@@ -1,0 +1,19 @@
+---
+
+- name: Install Zookeeper
+  become: yes
+  hosts: zookeepernodes
+  tags: zookeeper
+  roles:
+    - role: zookeeper
+      zookeeper_node_iface: "ansible_{{ bds_internal_iface }}"
+      zookeeper_nodes: "{{ groups['zookeepernodes'] }}"
+
+    - name: Register with supervisor daemon
+      role: supervisord
+      supervisord_programs:
+        zookeeper:
+          user: zookeeper
+          command: bash -lc "/opt/zookeeper/bin/zkServer.sh start-foreground"
+          stdout_logfile: /var/log/zookeeper/stdout.log
+          stderr_logfile: /var/log/zookeeper/stderr.log

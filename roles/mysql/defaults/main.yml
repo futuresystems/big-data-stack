@@ -2,7 +2,7 @@
 mysql_root_user: root
 mysql_root_pass: root
 mysql_pkgs:
-  - "mysql-server-5.6"
-  - "mysql-client-5.6"
+  - mysql-server
+  - mysql-client
   - python-mysqldb
   - libmysql-java
