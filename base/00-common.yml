@@ -9,8 +9,8 @@
     - role: common
 
       iface_internal: "{{ bds_internal_iface }}"
-      use_ansible_inventory_hostname: true
-      generate_hosts_file: true
+      use_ansible_inventory_hostname: false
+      generate_hosts_file: false
 
       package_list_debian:
         - emacs24-nox

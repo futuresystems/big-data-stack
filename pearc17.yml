@@ -1,0 +1,4 @@
+---
+
+- include: ./play-hadoop.yml
+- include: ./addons/spark.yml
