@@ -1,0 +1,10 @@
+diff --git a/group_vars/all.yml b/group_vars/all.yml
+index 1d7fe07..699b89d 100644
+--- a/group_vars/all.yml
++++ b/group_vars/all.yml
+@@ -1,4 +1,4 @@
+ ---
+   HIVE_METASTORE: mysql
+-  bds_internal_iface: eth0
++  bds_internal_iface: ens3
+ 
