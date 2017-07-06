@@ -63,7 +63,7 @@
 - name: ensure services running
   service:
     name: "{{ item }}"
-    state: running
+    state: started
   with_items: "{{ _services_running | union(services_running_common) }}"
   tags:
     - common_service
