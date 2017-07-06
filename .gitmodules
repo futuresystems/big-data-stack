@@ -1,54 +1,54 @@
 [submodule "roles/hadoop_configure"]
 	path = roles/hadoop_configure
-	url = git@github.com:futuresystems/ansible-role-hadoop_configure
+	url = git://github.com/futuresystems/ansible-role-hadoop_configure
 [submodule "roles/hadoop_install"]
 	path = roles/hadoop_install
-	url = git@github.com:futuresystems/ansible-role-hadoop_install
+	url = git://github.com/futuresystems/ansible-role-hadoop_install
 [submodule "roles/limits"]
 	path = roles/limits
-	url = https://github.com/Oefenweb/ansible-limits
+	url = git://github.com/Oefenweb/ansible-limits
 [submodule "roles/maven"]
 	path = roles/maven
-	url = git@github.com:futuresystems/ansible-role-maven
+	url = git://github.com/futuresystems/ansible-role-maven
 [submodule "roles/spark"]
 	path = roles/spark
-	url = git@github.com:futuresystems/ansible-role-spark
+	url = git://github.com/futuresystems/ansible-role-spark
 [submodule "roles/supervisord"]
 	path = roles/supervisord
-	url = git@github.com:futuresystems/ansible-role-supervisord
+	url = git://github.com/futuresystems/ansible-role-supervisord
 [submodule "roles/zookeeper"]
 	path = roles/zookeeper
-	url = git@github.com:futuresystems/ansible-role-zookeeper
+	url = git://github.com/futuresystems/ansible-role-zookeeper
 [submodule "roles/ganglia_metad"]
 	path = roles/ganglia_metad
-	url = git@github.com:futuresystems/ansible-role-ganglia-metad
+	url = git://github.com/futuresystems/ansible-role-ganglia-metad
 [submodule "roles/ganglia_mond"]
 	path = roles/ganglia_mond
-	url = git@github.com:futuresystems/ansible-role-ganglia-mond
+	url = git://github.com/futuresystems/ansible-role-ganglia-mond
 [submodule "roles/ganglia_web"]
 	path = roles/ganglia_web
-	url = git@github.com:futuresystems/ansible-role-ganglia-web
+	url = git://github.com/futuresystems/ansible-role-ganglia-web
 [submodule "roles/nagios_client"]
 	path = roles/nagios_client
-	url = git@github.com:futuresystems/ansible-role-nagios-client
+	url = git://github.com/futuresystems/ansible-role-nagios-client
 [submodule "roles/nagios_config"]
 	path = roles/nagios_config
-	url = git@github.com:futuresystems/ansible-role-nagios-config
+	url = git://github.com/futuresystems/ansible-role-nagios-config
 [submodule "roles/nagios_server"]
 	path = roles/nagios_server
-	url = git@github.com:futuresystems/ansible-role-nagios-server
+	url = git://github.com/futuresystems/ansible-role-nagios-server
 [submodule "roles/java"]
 	path = roles/java
-	url = git@github.com:futuresystems/ansible-role-java
+	url = git://github.com/futuresystems/ansible-role-java
 [submodule "roles/pig"]
 	path = roles/pig
-	url = git@github.com:futuresystems/ansible-role-pig.git
+	url = git://github.com/futuresystems/ansible-role-pig.git
 [submodule "roles/hbase_install"]
 	path = roles/hbase_install
-	url = git@github.com:futuresystems/ansible-role-hbase_install.git
+	url = git://github.com/futuresystems/ansible-role-hbase_install.git
 [submodule "roles/hbase_configure"]
 	path = roles/hbase_configure
-	url = git@github.com:futuresystems/ansible-role-hbase_configure.git
+	url = git://github.com/futuresystems/ansible-role-hbase_configure.git
 [submodule "roles/drill"]
 	path = roles/drill
-	url = git@github.com:futuresystems/ansible-role-drill.git
+	url = git://github.com/futuresystems/ansible-role-drill.git
