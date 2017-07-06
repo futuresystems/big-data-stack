@@ -1,0 +1,10 @@
+diff --git a/pearc17.yml b/pearc17.yml
+new file mode 100644
+index 0000000..cf26f56
+--- /dev/null
++++ b/pearc17.yml
+@@ -0,0 +1,4 @@
++---
++
++- include: ./play-hadoop.yml
++- include: ./addons/spark.yml
