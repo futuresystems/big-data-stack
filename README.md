@@ -5,8 +5,7 @@ stack on top of Hadoop/Yarn.
 
 The `play-hadoop.yml` deploys the base system. Addons, such as Pig,
 Spark, etc, are deployed using the playbooks in the `addons`
-directory. A playbook for deploying all the addons is given in
-`play-alladdons.yml`.
+directory.
 
 
 # Stack
@@ -67,6 +66,58 @@ Legend:
 ## Monitoring
 
   * [X] [Ganglia](http://ganglia.info/?p=88)
+
+
+# Requirements
+
+- git
+- GitHub account with uploaded SSH keys (due to use of submodules)
+- Python, pip, virtualenv
+- Nodes accessible by SSH to admin-privileged account
+
+# Quickstart
+
+- Clone this repository (you must have a GitHub account and uploaded your SSH)
+
+    ```
+    $ git clone --recursive git://github.com/futuresystems/big-data-stack.git
+    $ cd big-data-stack
+    ```
+
+- Create a virtualenv
+
+    ```
+    $ virtualenv venv && source venv/bin/activate
+    ```
+
+- Install the dependencies
+
+    ```
+    (venv) $ pip install -r requirements.txt
+    ```
+
+- Generate the inventory file
+
+    ```
+    (venv) $ python mk-inventory -n bds- 10.0.0.10 10.0.0.11 >inventory.txt
+    ```
+
+- Sanity check
+
+    ```
+    (venv) $ ansible all -m ping
+    ```
+    
+    If this fails, ensure that the nodes are SSH-accessible and that
+    the user is correct in `ansible.cfg` (alternatively, override
+    using the `-u $REMOTE_USERNAME`) flag. You can pass `-v` to
+    increase verbosity (add multiple for more details eg `-vvvv`).
+
+- Deploy
+
+    ```
+    (venv) $ ansible-playbook play-hadoop.yml addons/spark.yml    # ... etc
+    ```
 
 
 # Usage
